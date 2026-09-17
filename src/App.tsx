@@ -11,6 +11,7 @@ import { SpeciesGuide } from './components/SpeciesGuide';
 import { AiSpeciesIdentifier } from './components/AiSpeciesIdentifier';
 import { CatchLogbook } from './components/CatchLogbook';
 import { CatchInsights } from './components/CatchInsights';
+import { FishingIntelligence } from './components/FishingIntelligence';
 import { RegulationsView } from './components/RegulationsView';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
@@ -137,6 +138,7 @@ export default function App() {
         {activeTab === 'logbook' && (
           <div className="animate-in fade-in duration-200">
             <CatchInsights entries={catches} />
+            <FishingIntelligence entries={catches} />
             <CatchLogbook entries={catches} onAddEntry={handleAddCatch} onDeleteEntry={handleDeleteCatch} defaultLocation={selectedLocation.name} defaultTideState={tideData.currentTrend} />
           </div>
         )}
