@@ -6,6 +6,7 @@ export interface FishingPattern {
   topTide?: string;
   topBait?: string;
   topSpot?: string;
+  confidence: 'low' | 'building' | 'strong';
 }
 
 export interface FishingIntelligence {
@@ -33,6 +34,12 @@ const mostCommon = (values: string[]): string | undefined => {
   return winner;
 };
 
+const getConfidence = (catchCount: number): FishingPattern['confidence'] => {
+  if (catchCount >= 5) return 'strong';
+  if (catchCount >= 3) return 'building';
+  return 'low';
+};
+
 export function getFishingIntelligence(entries: CatchLogEntry[]): FishingIntelligence {
   const bySpecies = new Map<string, CatchLogEntry[]>();
   entries.forEach((entry) => {
@@ -49,6 +56,7 @@ export function getFishingIntelligence(entries: CatchLogEntry[]): FishingIntelli
       topTide: mostCommon(catches.map((catchEntry) => catchEntry.tideState)),
       topBait: mostCommon(catches.map((catchEntry) => catchEntry.baitOrLure)),
       topSpot: mostCommon(catches.map((catchEntry) => catchEntry.location)),
+      confidence: getConfidence(catches.length),
     }))
     .sort((a, b) => b.catchCount - a.catchCount);
 
