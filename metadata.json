@@ -1,0 +1,6 @@
+{
+  "name": "South Africa Fishing & Tide Guide",
+  "description": "Real-time coastal tides, marine weather, solunar forecasts, and species identification guides with South African recreational fishing regulations.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

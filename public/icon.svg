@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091428" />
+      <stop offset="50%" stop-color="#06223d" />
+      <stop offset="100%" stop-color="#020d1c" />
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="fishGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle / Base -->
+  <rect width="512" height="512" rx="110" fill="url(#bg)" />
+
+  <!-- Outer Ring Accent -->
+  <rect x="16" y="16" width="480" height="480" rx="98" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-opacity="0.3" />
+
+  <!-- Stylized Ocean Waves -->
+  <path d="M 64 340 C 120 310, 160 370, 220 340 C 280 310, 320 370, 380 340 C 420 320, 440 330, 448 340 L 448 420 C 448 440, 428 448, 400 448 L 112 448 C 84 448, 64 440, 64 420 Z" fill="#0369a1" opacity="0.4" />
+  
+  <path d="M 64 370 C 130 335, 170 400, 240 365 C 310 330, 350 395, 420 360 C 435 352, 444 356, 448 360 L 448 430 C 448 444, 434 448, 410 448 L 102 448 C 78 448, 64 444, 64 430 Z" fill="url(#waveGrad)" opacity="0.75" />
+
+  <!-- Leaping South African Sportfish (Galjoen / Yellowtail Silhouette) -->
+  <g transform="translate(100, 110) scale(0.6)">
+    <!-- Body -->
+    <path d="M 80 260 C 140 160, 320 140, 420 220 C 470 260, 490 280, 520 270 C 510 295, 480 320, 440 310 C 340 330, 220 350, 150 320 C 110 300, 90 280, 80 260 Z" fill="url(#fishGrad)" />
+    
+    <!-- Tail Fin -->
+    <path d="M 90 265 C 40 210, 20 170, 10 140 C 35 190, 60 230, 85 260 C 60 290, 35 330, 10 380 C 20 350, 40 310, 90 275 Z" fill="#0284c7" />
+
+    <!-- Dorsal Fin -->
+    <path d="M 230 155 C 280 80, 350 100, 370 180 Z" fill="#0284c7" opacity="0.9" />
+
+    <!-- Pectoral Fin -->
+    <path d="M 330 250 C 370 290, 380 330, 360 340 C 345 340, 335 310, 325 270 Z" fill="#0f766e" />
+
+    <!-- Fish Eye -->
+    <circle cx="430" cy="225" r="10" fill="#0f172a" />
+    <circle cx="433" cy="222" r="3.5" fill="#f8fafc" />
+  </g>
+
+  <!-- Moon / Tide Solunar Orb -->
+  <circle cx="370" cy="130" r="32" fill="#fef08a" opacity="0.9" />
+  <circle cx="380" cy="125" r="28" fill="url(#bg)" />
+
+</svg>

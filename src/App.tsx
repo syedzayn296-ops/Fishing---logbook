@@ -1,0 +1,380 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { CoastalLocation, MarineWeatherData, CatchLogEntry } from './types';
+import { SA_FISHING_LOCATIONS } from './data/saLocations';
+import { calculateTidesForDay, getMoonPhaseInfo, getSolunarPeriods } from './utils/tideEngine';
+import { fetchMarineWeather, getCachedMarineWeather } from './utils/weatherApi';
+
+import { Header } from './components/Header';
+import { TideChart } from './components/TideChart';
+import { WeatherWidget } from './components/WeatherWidget';
+import { SpeciesGuide } from './components/SpeciesGuide';
+import { AiSpeciesIdentifier } from './components/AiSpeciesIdentifier';
+import { CatchLogbook } from './components/CatchLogbook';
+import { RegulationsView } from './components/RegulationsView';
+import { OfflineIndicator } from './components/OfflineIndicator';
+
+import { Waves, Sparkles, MapPin, Compass, AlertCircle } from 'lucide-react';
+
+const STORAGE_KEY = 'sa_fishing_logbook_v1';
+
+const INITIAL_SAMPLE_CATCHES: CatchLogEntry[] = [
+  {
+    id: 'sample-1',
+    speciesName: 'Galjoen (South African National Fish)',
+    lengthCm: 38,
+    weightKg: 1.4,
+    location: 'Strandfontein (False Bay)',
+    baitOrLure: 'Fresh red bait on 1/0 hook',
+    tideState: 'Rising (Flood) - High Push',
+    timestamp: new Date(Date.now() - 86400000 * 2).toISOString(),
+    notes: 'Heavy churning white water. Struck in first breaker gutter 2 hours before high tide.',
+    isLegal: true,
+  },
+  {
+    id: 'sample-2',
+    speciesName: 'Kob / Dusky Kob (Kabeljou)',
+    lengthCm: 64,
+    weightKg: 3.2,
+    location: 'Breede River Mouth (Witsand)',
+    baitOrLure: 'Chokka & sardine combo',
+    tideState: 'Full Spring High Tide',
+    timestamp: new Date(Date.now() - 86400000 * 5).toISOString(),
+    notes: 'Caught at dusk in main drop-off channel. Beautiful healthy fish.',
+    isLegal: true,
+  },
+  {
+    id: 'sample-3',
+    speciesName: 'Galjoen (South African National Fish)',
+    lengthCm: 42,
+    weightKg: 1.8,
+    location: 'Melkbosstrand (West Coast)',
+    baitOrLure: 'White mussel & red bait cocktail',
+    tideState: 'High Tide Turn',
+    timestamp: new Date(Date.now() - 86400000 * 8).toISOString(),
+    notes: 'Strong swell and heavy kelp. Solid fight on light tackle.',
+    isLegal: true,
+  },
+  {
+    id: 'sample-4',
+    speciesName: 'Garrick / Leervis',
+    lengthCm: 76,
+    weightKg: 4.8,
+    location: 'Knysna Lagoon',
+    baitOrLure: 'Live mullet under float',
+    tideState: 'Pushing Mid-Tide',
+    timestamp: new Date(Date.now() - 86400000 * 12).toISOString(),
+    notes: 'Aggressive surface smash along sandbank drop-off. Measured, photographed, and cleanly revived.',
+    isLegal: true,
+  },
+  {
+    id: 'sample-5',
+    speciesName: 'Kob / Dusky Kob (Kabeljou)',
+    lengthCm: 55,
+    weightKg: 2.1,
+    location: 'Sunday’s River Mouth (Algoa Bay)',
+    baitOrLure: 'Pencil bait & mud prawn',
+    tideState: 'Low Water Incoming',
+    timestamp: new Date(Date.now() - 86400000 * 16).toISOString(),
+    notes: 'Night session on sandy bar.',
+    isLegal: true,
+  },
+  {
+    id: 'sample-6',
+    speciesName: 'Cape Yellowtail',
+    lengthCm: 82,
+    weightKg: 5.6,
+    location: 'Cape Point (South Coast)',
+    baitOrLure: 'Silver spoon / Iron jig fast retrieve',
+    tideState: 'Spring Low Slack Water',
+    timestamp: new Date(Date.now() - 86400000 * 20).toISOString(),
+    notes: 'Boiling school of tail feeding on anchovies off the bellows.',
+    isLegal: true,
+  },
+];
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState<'tides' | 'species' | 'ai-identify' | 'logbook' | 'regulations'>('tides');
+  const [selectedLocation, setSelectedLocation] = useState<CoastalLocation>(SA_FISHING_LOCATIONS[1]); // False Bay default
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  
+  // Weather state (initialized with cache if available)
+  const [weather, setWeather] = useState<MarineWeatherData | null>(() => {
+    return getCachedMarineWeather(SA_FISHING_LOCATIONS[1].lat, SA_FISHING_LOCATIONS[1].lon);
+  });
+  const [weatherLoading, setWeatherLoading] = useState(false);
+
+  // Catch Logbook entries state persisted in localStorage
+  const [catches, setCatches] = useState<CatchLogEntry[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Failed to parse saved catches:', e);
+    }
+    return INITIAL_SAMPLE_CATCHES;
+  });
+
+  // Save catches to localStorage on change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(catches));
+    } catch (e) {
+      console.error('Failed to save catches:', e);
+    }
+  }, [catches]);
+
+  // Astronomical Tide Calculations (Harmonics for selected location & date)
+  // Runs 100% locally and offline without requiring network connectivity
+  const tideData = useMemo(() => {
+    return calculateTidesForDay(selectedLocation, selectedDate);
+  }, [selectedLocation, selectedDate]);
+
+  // Moon Phase & Solunar Calculations (100% offline mathematical calculations)
+  const moonInfo = useMemo(() => {
+    return getMoonPhaseInfo(selectedDate);
+  }, [selectedDate]);
+
+  const solunarPeriods = useMemo(() => {
+    return getSolunarPeriods(selectedDate);
+  }, [selectedDate]);
+
+  // Load weather with immediate local cached fallback
+  const loadWeatherForLocation = useCallback((lat: number, lon: number) => {
+    // Check if we have cached data to show immediately
+    const cached = getCachedMarineWeather(lat, lon);
+    if (cached) {
+      setWeather(cached);
+    }
+
+    setWeatherLoading(true);
+    fetchMarineWeather(lat, lon)
+      .then((data) => {
+        setWeather(data);
+        setWeatherLoading(false);
+      })
+      .catch((err) => {
+        console.warn('Unable to reach live weather service, falling back to cache:', err);
+        setWeatherLoading(false);
+      });
+  }, []);
+
+  // Fetch Marine Weather when location changes
+  useEffect(() => {
+    loadWeatherForLocation(selectedLocation.lat, selectedLocation.lon);
+  }, [selectedLocation.lat, selectedLocation.lon, loadWeatherForLocation]);
+
+  // Pre-cache other popular SA coastal spots in the background so offline switching is seamless
+  useEffect(() => {
+    if (typeof window === 'undefined' || !navigator.onLine) return;
+
+    const timer = setTimeout(() => {
+      // Warm cache for key spots
+      const spotsToWarm = SA_FISHING_LOCATIONS.filter((l) => l.id !== selectedLocation.id).slice(0, 5);
+      spotsToWarm.forEach((spot) => {
+        fetchMarineWeather(spot.lat, spot.lon).catch(() => {});
+      });
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [selectedLocation.id]);
+
+  // Add Catch handler
+  const handleAddCatch = (entry: CatchLogEntry) => {
+    setCatches((prev) => [entry, ...prev]);
+  };
+
+  // Pre-fill from AI identifier handler
+  const handleLogFromAi = (partialEntry: Partial<CatchLogEntry>) => {
+    const newEntry: CatchLogEntry = {
+      id: `catch-${Date.now()}`,
+      speciesName: partialEntry.speciesName || 'Unknown Fish',
+      lengthCm: partialEntry.lengthCm,
+      weightKg: partialEntry.weightKg,
+      location: partialEntry.location || selectedLocation.name,
+      baitOrLure: partialEntry.baitOrLure || 'Not specified',
+      tideState: tideData.currentTrend,
+      timestamp: new Date().toISOString(),
+      notes: partialEntry.notes,
+      photoUrl: partialEntry.photoUrl,
+      isLegal: partialEntry.isLegal ?? true,
+    };
+    handleAddCatch(newEntry);
+  };
+
+  const handleDeleteCatch = (id: string) => {
+    setCatches((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
+      
+      {/* App Header & Navigation */}
+      <Header
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        currentTideHeight={tideData.currentHeight}
+        currentTideTrend={tideData.currentTrend}
+        moonInfo={moonInfo}
+      />
+
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
+        
+        {/* Offline & Cache Status Notification Banner */}
+        <OfflineIndicator
+          isWeatherCached={weather?.isOfflineSnapshot}
+          weatherCachedAt={weather?.cachedAt}
+          onRefreshWeather={() => loadWeatherForLocation(selectedLocation.lat, selectedLocation.lon)}
+        />
+
+        {/* TAB 1: Tides & Marine Weather Dashboard */}
+        {activeTab === 'tides' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Real-time Astronomical Tide Graph */}
+            <TideChart
+              location={selectedLocation}
+              selectedDate={selectedDate}
+              curvePoints={tideData.curvePoints}
+              extrema={tideData.extrema}
+              currentHeight={tideData.currentHeight}
+              currentTrend={tideData.currentTrend}
+              nextExtremum={tideData.nextExtremum}
+              moonInfo={moonInfo}
+              solunarPeriods={solunarPeriods}
+              sunrise={weather?.sunrise}
+              sunset={weather?.sunset}
+            />
+
+            {/* Coastal Marine & Weather Updates Widget */}
+            <WeatherWidget
+              weather={weather}
+              locationName={selectedLocation.name}
+            />
+
+            {/* Quick Link Banner to Species Guide & AI Identifier */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div
+                onClick={() => setActiveTab('species')}
+                className="bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group"
+              >
+                <div>
+                  <span className="text-xs uppercase font-bold text-blue-400 block tracking-wider">
+                    Species Catalog
+                  </span>
+                  <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition">
+                    Explore {selectedLocation.name} Target Fish
+                  </h4>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {selectedLocation.keySpecies.join(' • ')}
+                  </p>
+                </div>
+                <span className="text-xs text-blue-400 font-semibold group-hover:translate-x-1 transition">
+                  View Guide →
+                </span>
+              </div>
+
+              <div
+                onClick={() => setActiveTab('ai-identify')}
+                className="bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group"
+              >
+                <div>
+                  <span className="text-xs uppercase font-bold text-amber-400 block tracking-wider">
+                    Catch Analyzer
+                  </span>
+                  <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition">
+                    Identify a Fish or Check Minimum Size
+                  </h4>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Snap a photo to verify DFFE legal requirements
+                  </p>
+                </div>
+                <span className="text-xs text-amber-400 font-semibold group-hover:translate-x-1 transition">
+                  Launch AI →
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: South African Species Guide */}
+        {activeTab === 'species' && (
+          <div className="animate-in fade-in duration-200">
+            <SpeciesGuide />
+          </div>
+        )}
+
+        {/* TAB 3: AI Species Identifier */}
+        {activeTab === 'ai-identify' && (
+          <div className="animate-in fade-in duration-200">
+            <AiSpeciesIdentifier
+              onLogCatch={handleLogFromAi}
+              defaultLocationName={selectedLocation.name}
+            />
+          </div>
+        )}
+
+        {/* TAB 4: Catch Diary / Logbook */}
+        {activeTab === 'logbook' && (
+          <div className="animate-in fade-in duration-200">
+            <CatchLogbook
+              entries={catches}
+              onAddEntry={handleAddCatch}
+              onDeleteEntry={handleDeleteCatch}
+              defaultLocation={selectedLocation.name}
+              defaultTideState={tideData.currentTrend}
+            />
+          </div>
+        )}
+
+        {/* TAB 5: SA Regulations & Bait Gathering Limits */}
+        {activeTab === 'regulations' && (
+          <div className="animate-in fade-in duration-200">
+            <RegulationsView />
+          </div>
+        )}
+
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 bg-slate-950 text-slate-500 text-xs py-5 mt-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div>
+            <p className="font-medium text-slate-400">
+              TideCast South Africa • Offline-Ready Marine Angling Tool
+            </p>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Tidal predictions based on South African hydrographic charts. Marine weather cached locally for connectivity-free angling along the coast.
+            </p>
+          </div>
+          <div className="flex items-center gap-4 text-slate-400">
+            <button
+              onClick={() => setActiveTab('regulations')}
+              className="hover:text-cyan-400 transition cursor-pointer"
+            >
+              Bait Limits
+            </button>
+            <button
+              onClick={() => setActiveTab('species')}
+              className="hover:text-cyan-400 transition cursor-pointer"
+            >
+              Species List
+            </button>
+            <button
+              onClick={() => setActiveTab('logbook')}
+              className="hover:text-cyan-400 transition cursor-pointer"
+            >
+              Catch Diary
+            </button>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
