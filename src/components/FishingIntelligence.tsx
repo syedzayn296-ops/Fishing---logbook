@@ -60,11 +60,17 @@ export const FishingIntelligence: React.FC<FishingIntelligenceProps> = ({ entrie
               <span>Bait: {pattern.topBait ?? '—'}</span>
               <span>Spot: {pattern.topSpot ?? '—'}</span>
             </div>
+            <div className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+              Pattern confidence: {pattern.confidence}
+            </div>
           </div>
         ))}
       </div>
 
       <div className="mt-3 text-[11px] text-slate-500">
+        Confidence is based on repeat catches: 1–2 low, 3–4 building, 5+ strong. It describes your logbook data, not a guarantee of future catches.
+      </div>
+      <div className="mt-1 text-[11px] text-slate-500">
         Measurement coverage: {intelligence.measuredRate}% of logged catches include a length or weight.
       </div>
     </section>
