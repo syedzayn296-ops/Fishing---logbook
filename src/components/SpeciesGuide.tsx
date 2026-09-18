@@ -231,7 +231,7 @@ export const SpeciesGuide: React.FC = () => {
                       Min Legal Size
                     </span>
                     <span className="text-sm font-bold text-amber-300 font-mono">
-                      {fish.minLegalSizeCm ? `${fish.minLegalSizeCm} cm` : 'No min size'}
+                      {fish.legalSizeLabel || (fish.minLegalSizeCm ? `${fish.minLegalSizeCm} cm` : 'No min size')}
                     </span>
                   </div>
 
@@ -240,7 +240,7 @@ export const SpeciesGuide: React.FC = () => {
                       Daily Bag Limit
                     </span>
                     <span className="text-sm font-bold text-cyan-300 font-mono">
-                      {fish.maxBagLimit ? `${fish.maxBagLimit} per day` : 'Unlimited'}
+                      {fish.bagLimitLabel || (fish.maxBagLimit ? `${fish.maxBagLimit} per day` : 'Unlimited')}
                     </span>
                   </div>
                 </div>
