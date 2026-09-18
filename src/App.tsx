@@ -50,11 +50,17 @@ export default function App() {
   const [catches, setCatches] = useState<CatchLogEntry[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved) as CatchLogEntry[];
+        return Array.isArray(parsed) ? parsed.filter((entry) => !String(entry.id).startsWith('sample-')) : [];
+      }
     } catch (e) {
       console.error('Failed to parse saved catches:', e);
     }
-    return INITIAL_SAMPLE_CATCHES;
+    // Fresh installs start empty so Fishing Intelligence is based only on the angler's real catches.
+    // Also remove the old built-in demo catches from existing local storage.
+    return [];
+
   });
 
   useEffect(() => {
