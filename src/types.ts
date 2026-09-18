@@ -81,6 +81,8 @@ export interface FishSpecies {
   habitat: ('Rock & Surf' | 'Estuary / Lagoon' | 'Deep Sea / Boat' | 'Reef & Kelp')[];
   minLegalSizeCm: number | null; // null means no minimum size
   maxBagLimit: number | null; // null means no bag limit or closed
+  legalSizeLabel?: string; // Optional area-specific legal-size wording
+  bagLimitLabel?: string; // Optional area-specific bag-limit wording
   closedSeason?: string;
   sassiStatus: SassiStatus;
   sassiReason: string;
