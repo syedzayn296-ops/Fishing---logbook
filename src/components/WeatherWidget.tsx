@@ -15,7 +15,8 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, locationN
     return (
       <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center animate-pulse">
         <Waves className="w-8 h-8 text-cyan-400 mx-auto mb-2 animate-bounce" />
-        <p className="text-sm text-slate-400">Loading coastal marine weather for {locationName}...</p>
+        <p className="text-sm text-slate-400">Live marine weather is unavailable for {locationName} right now.</p>
+        <p className="text-xs text-slate-500 mt-1">The app will use a cached snapshot when one is available. No estimated conditions are shown as live data.</p>
       </div>
     );
   }
