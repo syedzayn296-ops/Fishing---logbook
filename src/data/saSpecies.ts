@@ -227,7 +227,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
     coast: ['south_coast', 'east_coast'],
     habitat: ['Rock & Surf', 'Reef & Kelp'],
     minLegalSizeCm: 30,
-    maxBagLimit: 2,
+    maxBagLimit: 5,
     closedSeason: 'None',
     sassiStatus: 'Orange',
     sassiReason: 'Vulnerable inshore rock species with slow growth rates.',
