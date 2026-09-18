@@ -20,26 +20,7 @@ import { Waves, Sparkles, MapPin, Compass, AlertCircle } from 'lucide-react';
 const STORAGE_KEY = 'sa_fishing_logbook_v1';
 
 /* Legacy demo data removed: new installs and existing demo entries now start empty. */
-const INITIAL_SAMPLE_CATCHES: CatchLogEntry[] = [
-  {
-    id: 'sample-1', speciesName: 'Galjoen (South African National Fish)', lengthCm: 38, weightKg: 1.4, location: 'Strandfontein (False Bay)', baitOrLure: 'Fresh red bait on 1/0 hook', tideState: 'Rising (Flood) - High Push', timestamp: new Date(Date.now() - 86400000 * 2).toISOString(), notes: 'Heavy churning white water. Struck in first breaker gutter 2 hours before high tide.', isLegal: true,
-  },
-  {
-    id: 'sample-2', speciesName: 'Kob / Dusky Kob (Kabeljou)', lengthCm: 64, weightKg: 3.2, location: 'Breede River Mouth (Witsand)', baitOrLure: 'Chokka & sardine combo', tideState: 'Full Spring High Tide', timestamp: new Date(Date.now() - 86400000 * 5).toISOString(), notes: 'Caught at dusk in main drop-off channel. Beautiful healthy fish.', isLegal: true,
-  },
-  {
-    id: 'sample-3', speciesName: 'Galjoen (South African National Fish)', lengthCm: 42, weightKg: 1.8, location: 'Melkbosstrand (West Coast)', baitOrLure: 'White mussel & red bait cocktail', tideState: 'High Tide Turn', timestamp: new Date(Date.now() - 86400000 * 8).toISOString(), notes: 'Strong swell and heavy kelp. Solid fight on light tackle.', isLegal: true,
-  },
-  {
-    id: 'sample-4', speciesName: 'Garrick / Leervis', lengthCm: 76, weightKg: 4.8, location: 'Knysna Lagoon', baitOrLure: 'Live mullet under float', tideState: 'Pushing Mid-Tide', timestamp: new Date(Date.now() - 86400000 * 12).toISOString(), notes: 'Aggressive surface smash along sandbank drop-off. Measured, photographed, and cleanly revived.', isLegal: true,
-  },
-  {
-    id: 'sample-5', speciesName: 'Kob / Dusky Kob (Kabeljou)', lengthCm: 55, weightKg: 2.1, location: 'Sunday’s River Mouth (Algoa Bay)', baitOrLure: 'Pencil bait & mud prawn', tideState: 'Low Water Incoming', timestamp: new Date(Date.now() - 86400000 * 16).toISOString(), notes: 'Night session on sandy bar.', isLegal: true,
-  },
-  {
-    id: 'sample-6', speciesName: 'Cape Yellowtail', lengthCm: 82, weightKg: 5.6, location: 'Cape Point (South Coast)', baitOrLure: 'Silver spoon / Iron jig fast retrieve', tideState: 'Spring Low Slack Water', timestamp: new Date(Date.now() - 86400000 * 20).toISOString(), notes: 'Boiling school of tail feeding on anchovies off the bellows.', isLegal: true,
-  },
-];
+/* Legacy demo data removed: new installs and existing demo entries now start empty. */
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'tides' | 'species' | 'ai-identify' | 'logbook' | 'regulations'>('tides');
