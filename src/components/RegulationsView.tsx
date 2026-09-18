@@ -77,17 +77,20 @@ export const RegulationsView: React.FC = () => {
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div>
             <h3 className="text-base font-bold text-white font-['Outfit',sans-serif]">
-              Recreational Inshore Bait Bag Limits
+              Recreational Inshore Bait Limits
             </h3>
             <p className="text-xs text-slate-400">
-              Harvesting requires a valid DFFE Bait / Mollusc Collecting Permit.
+              Limits below are from MLRA Annexure 13. Check the current DFFE permit conditions and local rules before collecting bait.
             </p>
           </div>
           <span className="text-xs text-amber-400 font-medium">
-            Per Angler / Per Day
+            Annexure 13 • verify current conditions
           </span>
         </div>
 
+        <p className="text-[11px] text-slate-500 leading-relaxed -mt-1">
+          These are Annexure 13 possession limits; additional size, method, area and permit conditions may apply.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {SA_BAIT_LIMITS.map((bait, idx) => (
             <div
