@@ -151,8 +151,14 @@ export function calculateTidesForDay(
     }
   }
 
-  // Calculate current real-time tide status
+  // Use real time only when viewing today. For another selected date, use the start of that selected day
+  // so the chart's status and next-extremum belong to the date being displayed.
   const now = new Date();
+  const sameCalendarDay =
+    now.getFullYear() === startOfDay.getFullYear() &&
+    now.getMonth() === startOfDay.getMonth() &&
+    now.getDate() === startOfDay.getDate();
+  const statusTime = sameCalendarDay ? now : startOfDay;
   const nowElapsedHours = (now.getTime() - referenceTime - offsetMs) / (1000 * 60 * 60);
   const nowM2 = (2 * Math.PI * nowElapsedHours) / tidalPeriodHours;
   const nowS2 = (2 * Math.PI * nowElapsedHours) / 12.0;
@@ -184,7 +190,7 @@ export function calculateTidesForDay(
   }
 
   // Find next upcoming extremum
-  const futureExtrema = extrema.filter((e) => e.time.getTime() > now.getTime());
+  const futureExtrema = extrema.filter((e) => e.time.getTime() > statusTime.getTime());
   const nextExtremum = futureExtrema.length > 0 ? futureExtrema[0] : null;
 
   return {
