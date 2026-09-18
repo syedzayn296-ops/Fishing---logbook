@@ -1,6 +1,6 @@
 import React from 'react';
-import { SA_BAIT_LIMITS, SA_GENERAL_REGULATIONS } from '../data/saRegulations';
-import { ShieldCheck, AlertTriangle, CheckCircle2, Ruler, BookOpen, Compass } from 'lucide-react';
+import { SA_BAIT_LIMITS, SA_GENERAL_REGULATIONS, SA_REGULATORY_SOURCES } from '../data/saRegulations';
+import { ShieldCheck, AlertTriangle, CheckCircle2, Ruler, BookOpen, Compass, ExternalLink } from 'lucide-react';
 
 export const RegulationsView: React.FC = () => {
   return (
@@ -22,6 +22,53 @@ export const RegulationsView: React.FC = () => {
               This is a practical regulatory reference, not a substitute for the current permit conditions or gazetted regulations. DFFE notes that recreational-fishing information may change; verify the current rules for your species, area and permit before keeping a catch.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Official Permit & Regulation Sources */}
+      <div className="bg-slate-900/80 border border-cyan-500/20 rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+          <div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-cyan-400" />
+              <h3 className="text-base font-bold text-white font-['Outfit',sans-serif]">
+                Permit & Official Sources
+              </h3>
+            </div>
+            <p className="text-xs text-slate-400 mt-1">
+              Use the official DFFE links to apply, renew, and check the current rules before fishing.
+            </p>
+          </div>
+          <span className="text-[11px] text-emerald-400 font-semibold">
+            OFFICIAL DFFE LINKS
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {SA_REGULATORY_SOURCES.map((source) => (
+            <a
+              key={source.url}
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+              className="group bg-slate-800/60 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/40 rounded-xl p-4 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    {source.title}
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                    {source.note}
+                  </p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              </div>
+              <div className="mt-3 text-[10px] text-slate-500 font-mono break-all">
+                {source.url.replace(/^https?:\/\//, '')}
+              </div>
+            </a>
+          ))}
         </div>
       </div>
 
