@@ -1,7 +1,7 @@
 export interface BaitLimit {
   name: string;
   scientificName: string;
-  dailyBagLimit: string;
+  limit: string;
   minimumSize?: string;
   collectionMethod: string;
   notes: string;
@@ -11,43 +11,43 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Mud Prawn',
     scientificName: 'Upogebia africana',
-    dailyBagLimit: '50',
+    limit: '50',
     collectionMethod: 'Hand or hand-operated pumping device; follow the current permit and collection-method restrictions.',
     notes: 'Superb bait for Spotted Grunter, Kob, Stumpnose, and Steenbras in estuaries.',
   },
   {
     name: 'Sand Prawn / Pink Prawn',
     scientificName: 'Callichirus kraussi',
-    dailyBagLimit: '50',
+    limit: '50',
     collectionMethod: 'Hand or hand-operated pumping device; follow the current permit and collection-method restrictions.',
     notes: 'Irresistible to Grunter, Blacktail, and Bronze Bream.',
   },
   {
     name: 'Bloodworm',
     scientificName: 'Arenicola loveni',
-    dailyBagLimit: '5',
+    limit: '5',
     collectionMethod: 'By hand or permitted collection method; collection restrictions apply in some areas.',
     notes: 'High conservation value; top bait for White Steenbras and trophy Kob in surf gutters.',
   },
   {
     name: 'White Mussel',
     scientificName: 'Donax serra',
-    dailyBagLimit: '50',
+    limit: '50',
     minimumSize: 'Must not pass through a 35 mm gauge ring',
-    collectionMethod: 'Harvested by foot shuffling / hand collecting in intertidal surf sand.',
+    collectionMethod: 'Hand collecting in the intertidal zone; follow the current permit and area-specific collection rules.',
     notes: 'Prime bait for Galjoen, White Musselcracker, and Kob.',
   },
   {
     name: 'Red Bait',
     scientificName: 'Pyura stolonifera',
-    dailyBagLimit: '2 kg (without tunic)',
+    limit: '2 kg (without tunic)',
     collectionMethod: 'Cut from rocks with a knife as permitted; leave the base covering in situ and follow current permit conditions.',
     notes: 'The legendary bait for Galjoen, Roman, Poenskop, and Blacktail.',
   },
   {
     name: 'Alikreukel (Giant Turban Snail)',
     scientificName: 'Turbo sarmaticus',
-    dailyBagLimit: '5 per permit per day',
+    limit: '5',
     minimumSize: 'Must not pass through a 63.5mm circular gauge',
     collectionMethod: 'Hand collecting only; strictly no diving with artificial breathing apparatus (SCUBA).',
     notes: 'Favorite rock bait for Poenskop (Black Musselcracker) and Brusher.',
@@ -55,14 +55,14 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Chokka / Squid',
     scientificName: 'Loligo reynaudii',
-    dailyBagLimit: '20',
+    limit: '20',
     collectionMethod: 'Rod and/or line; follow the current permit conditions.',
     notes: 'Universal South African marine bait used for Kob, Geelbek, Yellowtail, and Reef fish.',
   },
   {
     name: 'Crabs (Rock Crab / Shore Crab)',
     scientificName: 'Plagusia chabrus / Cyclograpsus punctatus',
-    dailyBagLimit: '15',
+    limit: '15',
     collectionMethod: 'Collection method depends on crab type; mud crab has separate rules and size restrictions.',
     notes: 'Crucial for Musselcracker, Poenskop, and Bronze Bream.',
   },
@@ -70,10 +70,10 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
 
 export const SA_GENERAL_REGULATIONS = {
   permitRequirements: [
-    'Every recreational angler aged 12 and above must carry a valid recreational fishing permit issued by DFFE (Department of Forestry, Fisheries and the Environment) or SA Post Office.',
-    'Permit categories include: Angling (rock & surf / deep sea), Mollusc & bait collecting, Spearfishing, and Cast-netting.',
-    'Maximum of two rods or handlines per angler at any one time, with up to 10 hooks total on a single trace (or single trace rules).',
-    'Recreational catches may NOT be bartered, sold, or offered for sale under any circumstances (heavy fines and gear confiscation apply).',
+    'A recreational fishing permit is required to engage in recreational fishing; permits are obtained through an authorised issuing channel and are subject to the prescribed fee.',
+    'The permit type and endorsement must match the activity being undertaken, such as angling, spearfishing or cast-netting.',
+    'A recreational permit holder may not sell fish caught under the authority of a recreational fishing permit.',
+    'Before keeping a catch, check the current MLRA species list, size limits, closed seasons, bag limits and permit conditions for the area and activity.'
   ],
   measuringRules: [
     'Fish must be measured in a straight line from the tip of the snout to the end of the tail (Total Length), or to the fork of the tail for species specified with Fork Length (e.g., Tuna/Billfish).',
