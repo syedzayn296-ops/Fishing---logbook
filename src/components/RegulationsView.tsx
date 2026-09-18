@@ -15,11 +15,11 @@ export const RegulationsView: React.FC = () => {
                 South African Marine Regulations & Bait Collection Limits
               </h2>
               <span className="px-2 py-0.5 rounded text-xs bg-rose-500/20 text-rose-300 font-semibold border border-rose-500/30">
-                DFFE Fisheries Guidelines
+                Regulatory reference • verify current permit conditions
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-              Official recreational harvesting laws under the Marine Living Resources Act. Compliance protects South Africa's fragile inshore nurseries and ensures sustainable angling for future generations.
+              This is a practical regulatory reference, not a substitute for the current permit conditions or gazetted regulations. DFFE notes that recreational-fishing information may change; verify the current rules for your species, area and permit before keeping a catch.
             </p>
           </div>
         </div>
