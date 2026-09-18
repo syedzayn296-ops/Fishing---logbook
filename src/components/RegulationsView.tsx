@@ -108,7 +108,7 @@ export const RegulationsView: React.FC = () => {
                     </span>
                   </div>
                   <span className="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-600/50 text-amber-300 text-xs font-bold font-mono shrink-0">
-                    {bait.dailyBagLimit}
+                    {bait.limit}
                   </span>
                 </div>
 
