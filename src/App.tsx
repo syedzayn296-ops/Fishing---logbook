@@ -12,6 +12,7 @@ import { AiSpeciesIdentifier } from './components/AiSpeciesIdentifier';
 import { CatchLogbook } from './components/CatchLogbook';
 import { CatchInsights } from './components/CatchInsights';
 import { FishingIntelligence } from './components/FishingIntelligence';
+import { FishingPlanner } from './components/FishingPlanner';
 import { RegulationsView } from './components/RegulationsView';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
@@ -105,6 +106,7 @@ export default function App() {
           <div className="space-y-6 animate-in fade-in duration-200">
             <TideChart location={selectedLocation} selectedDate={selectedDate} curvePoints={tideData.curvePoints} extrema={tideData.extrema} currentHeight={tideData.currentHeight} currentTrend={tideData.currentTrend} nextExtremum={tideData.nextExtremum} moonInfo={moonInfo} solunarPeriods={solunarPeriods} sunrise={weather?.sunrise} sunset={weather?.sunset} />
             <WeatherWidget weather={weather} locationName={selectedLocation.name} />
+            <FishingPlanner location={selectedLocation} selectedDate={selectedDate} extrema={tideData.extrema} solunarPeriods={solunarPeriods} moonInfo={moonInfo} weather={weather} catches={catches} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div onClick={() => setActiveTab('species')} className="bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
                 <div><span className="text-xs uppercase font-bold text-blue-400 block tracking-wider">Species Catalog</span><h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition">Explore {selectedLocation.name} Target Fish</h4><p className="text-xs text-slate-400 mt-0.5">{selectedLocation.keySpecies.join(' • ')}</p></div>
