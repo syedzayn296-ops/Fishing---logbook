@@ -19,7 +19,7 @@ export const RegulationsView: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-              This is a practical regulatory reference, not a substitute for the current permit conditions or gazetted regulations. DFFE notes that recreational-fishing information may change; verify the current rules for your species, area and permit before keeping a catch.
+              This is a practical regulatory reference, not a substitute for the current permit conditions or gazetted regulations. DFFE confirmed that the MLRA Regulations are the official and legally binding recreational-fishing instrument; verify the current rules for your species, area and permit before keeping a catch.
             </p>
           </div>
         </div>
@@ -37,6 +37,9 @@ export const RegulationsView: React.FC = () => {
             </div>
             <p className="text-xs text-slate-400 mt-1">
               Use the official DFFE links to apply, renew, and check the current rules before fishing.
+            </p>
+            <p className="text-[10px] text-slate-500 mt-1">
+              Legal-source review: 19 September 2026 • MLRA Regulations / Annexure 7 checked against current DFFE material.
             </p>
           </div>
           <span className="text-[11px] text-emerald-400 font-semibold">
