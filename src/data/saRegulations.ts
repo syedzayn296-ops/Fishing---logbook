@@ -11,7 +11,7 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Mud Prawn',
     scientificName: 'Upogebia africana',
-    dailyBagLimit: '50 per permit per day',
+    dailyBagLimit: 'Verify current permit condition',
     collectionMethod: 'Hand pump (prawn pump) only; no digging or disturbance of seagrass beds.',
     notes: 'Superb bait for Spotted Grunter, Kob, Stumpnose, and Steenbras in estuaries.',
   },
@@ -25,7 +25,7 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Bloodworm',
     scientificName: 'Arenicola loveni',
-    dailyBagLimit: '5 per permit per day',
+    dailyBagLimit: 'Verify current permit condition',
     collectionMethod: 'Hand suction pump or wire. No spade/fork digging allowed.',
     notes: 'High conservation value; top bait for White Steenbras and trophy Kob in surf gutters.',
   },
@@ -40,7 +40,7 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Red Bait',
     scientificName: 'Pyura stolonifera',
-    dailyBagLimit: '2 kg (without shell / pod)',
+    dailyBagLimit: 'Verify current permit condition',
     collectionMethod: 'Cut free with a knife from drift cast or exposed rocks at extreme low spring tide.',
     notes: 'The legendary bait for Galjoen, Roman, Poenskop, and Blacktail.',
   },
@@ -55,14 +55,14 @@ export const SA_BAIT_LIMITS: BaitLimit[] = [
   {
     name: 'Chokka / Squid',
     scientificName: 'Loligo reynaudii',
-    dailyBagLimit: '20 per permit per day',
+    dailyBagLimit: 'Verify current permit condition',
     collectionMethod: 'Handline or rod with squid jig; no spears or nets.',
     notes: 'Universal South African marine bait used for Kob, Geelbek, Yellowtail, and Reef fish.',
   },
   {
     name: 'Crabs (Rock Crab / Shore Crab)',
     scientificName: 'Plagusia chabrus / Cyclograpsus punctatus',
-    dailyBagLimit: '15 per permit per day',
+    dailyBagLimit: 'Verify current permit condition',
     collectionMethod: 'Hand collection or baited drop net.',
     notes: 'Crucial for Musselcracker, Poenskop, and Bronze Bream.',
   },
@@ -87,3 +87,10 @@ export const SA_GENERAL_REGULATIONS = {
     'Respect Marine Protected Areas (MPAs) such as Tsitsikamma, Table Mountain, Langebaan Zone B/C, Pondoland, and Aliwal Shoal sanctuary zones.',
   ],
 };
+
+
+export const SA_REGULATORY_SOURCES = [
+  { title: 'DFFE / MLRA Regulations — Recreational Fishing (Annexure 7)', url: 'https://www.dffe.gov.za/sites/default/files/legislations/mlra_regulations_gnr1111.pdf', note: 'Primary legal reference for recreational fishing species, size limits, bag limits and closed seasons.' },
+  { title: 'DFFE — Shad / Elf closed-season clarification (12 Sep 2025)', url: 'https://www.dffe.gov.za/mediarelease/george_shadclosedseason', note: 'DFFE confirms the closed season is 1 October to 30 November each year.' },
+  { title: 'DFFE — Recreational fishing e-permit platform', url: 'https://www.fishing.dffe.gov.za/', note: 'Official permit platform; check the current permit conditions before fishing or retaining a catch.' }
+];
