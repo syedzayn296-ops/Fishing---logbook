@@ -345,7 +345,7 @@ export const SpeciesGuide: React.FC = () => {
             <div className="mt-4 p-4 rounded-xl bg-slate-800/70 border border-cyan-500/30">
               <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5 mb-2.5">
                 <Shield className="w-4 h-4" />
-                South African Legal Regulations (DFFE)
+                South African Regulation Data
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                 <div>
