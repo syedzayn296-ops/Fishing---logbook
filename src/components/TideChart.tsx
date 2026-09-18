@@ -93,12 +93,12 @@ export const TideChart: React.FC<TideChartProps> = ({
             <h2 className="text-lg font-bold text-white font-['Outfit',sans-serif]">
               Astronomical Tide Graph
             </h2>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/60 font-mono">
-              Chart Datum (CD)
+            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800/60 font-mono">
+              Modeled • not official tide tables
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
-            Port reference: <span className="text-slate-200 font-medium">{location.tideStationName}</span> ({location.regionName})
+            Modeled estimate • reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> ({location.regionName})
           </p>
         </div>
 
@@ -514,7 +514,7 @@ export const TideChart: React.FC<TideChartProps> = ({
           </div>
 
           <p className="text-[11px] text-slate-400 mt-2.5">
-            Tip: Combine a Major Solunar window with a pushing high tide for the highest strike rate.
+            Solunar windows are approximate guidance. Combine them with the actual tide, weather and your own catch history rather than treating them as a guaranteed bite forecast.
           </p>
         </div>
 
