@@ -20,7 +20,6 @@ import { Waves, Sparkles, MapPin, Compass, AlertCircle } from 'lucide-react';
 const STORAGE_KEY = 'sa_fishing_logbook_v1';
 
 /* Legacy demo data removed: new installs and existing demo entries now start empty. */
-/* Legacy demo data removed: new installs and existing demo entries now start empty. */
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'tides' | 'species' | 'ai-identify' | 'logbook' | 'regulations'>('tides');
