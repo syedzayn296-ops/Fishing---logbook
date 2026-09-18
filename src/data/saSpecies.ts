@@ -10,7 +10,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
     habitat: ['Rock & Surf', 'Reef & Kelp'],
     minLegalSizeCm: 35,
     maxBagLimit: 2,
-    closedSeason: '15 October to last day of February (Western & Eastern Cape)',
+    closedSeason: '15 October to last day of February each year (national recreational closed season)',
     sassiStatus: 'Red',
     sassiReason: 'Endemic national fish with strict conservation status. Prohibited from commercial sale; recreational catch only with tight bag limits.',
     description: 'South Africa’s official national fish. Highly adapted to turbulent, churning white water around shallow coastal reefs and rocky gullies. Powerful fighter that feeds aggressively in rough surf.',
