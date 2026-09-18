@@ -159,7 +159,7 @@ export function calculateTidesForDay(
     now.getMonth() === startOfDay.getMonth() &&
     now.getDate() === startOfDay.getDate();
   const statusTime = sameCalendarDay ? now : startOfDay;
-  const nowElapsedHours = (now.getTime() - referenceTime - offsetMs) / (1000 * 60 * 60);
+  const nowElapsedHours = (statusTime.getTime() - referenceTime - offsetMs) / (1000 * 60 * 60);
   const nowM2 = (2 * Math.PI * nowElapsedHours) / tidalPeriodHours;
   const nowS2 = (2 * Math.PI * nowElapsedHours) / 12.0;
   const nowDiurnal = (2 * Math.PI * nowElapsedHours) / 24.84;
