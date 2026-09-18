@@ -131,6 +131,20 @@ export const RegulationsView: React.FC = () => {
         </div>
       </div>
 
+      {/* Daily Catch Cap */}
+      <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-5 shadow-xl">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-base font-bold text-white font-['Outfit',sans-serif]">Overall Daily Fish Limit</h3>
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+              Regulation 22 limits a recreational fisher to <strong className="text-amber-300">10 fish in total per day</strong>, irrespective of species, unless the species has no bag limit or a bag limit exceeding 10. Species-specific bag limits and closed seasons still apply.
+            </p>
+            <p className="text-[11px] text-slate-500 mt-2">Official source: MLRA Regulations, Regulation 22(7)(f). Always verify the current permit and gazetted rules before retaining fish.</p>
+          </div>
+        </div>
+      </div>
+
       {/* General Angling Regulations & Permits */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         
