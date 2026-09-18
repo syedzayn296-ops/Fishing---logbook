@@ -19,6 +19,7 @@ import { Waves, Sparkles, MapPin, Compass, AlertCircle } from 'lucide-react';
 
 const STORAGE_KEY = 'sa_fishing_logbook_v1';
 
+/* Legacy demo data removed: new installs and existing demo entries now start empty. */
 const INITIAL_SAMPLE_CATCHES: CatchLogEntry[] = [
   {
     id: 'sample-1', speciesName: 'Galjoen (South African National Fish)', lengthCm: 38, weightKg: 1.4, location: 'Strandfontein (False Bay)', baitOrLure: 'Fresh red bait on 1/0 hook', tideState: 'Rising (Flood) - High Push', timestamp: new Date(Date.now() - 86400000 * 2).toISOString(), notes: 'Heavy churning white water. Struck in first breaker gutter 2 hours before high tide.', isLegal: true,
@@ -154,7 +155,7 @@ export default function App() {
 
       <footer className="border-t border-slate-800 bg-slate-950 text-slate-500 text-xs py-5 mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div><p className="font-medium text-slate-400">TideCast South Africa • Offline-Ready Marine Angling Tool</p><p className="text-[11px] text-slate-500 mt-0.5">Tidal predictions based on South African hydrographic charts. Marine weather cached locally for connectivity-free angling along the coast.</p></div>
+          <div><p className="font-medium text-slate-400">TideCast South Africa • Offline-Ready Marine Angling Tool</p><p className="text-[11px] text-slate-500 mt-0.5">Tide curve is a modeled estimate, not an official hydrographic tide table. Marine weather is live when available and cached locally for offline use.</p></div>
           <div className="flex items-center gap-4 text-slate-400"><button onClick={() => setActiveTab('regulations')} className="hover:text-cyan-400 transition cursor-pointer">Bait Limits</button><button onClick={() => setActiveTab('species')} className="hover:text-cyan-400 transition cursor-pointer">Species List</button><button onClick={() => setActiveTab('logbook')} className="hover:text-cyan-400 transition cursor-pointer">Catch Diary</button></div>
         </div>
       </footer>
