@@ -38,7 +38,7 @@ export function saveCachedMarineWeather(lat: number, lon: number, data: MarineWe
   }
 }
 
-export async function fetchMarineWeather(lat: number, lon: number): Promise<MarineWeatherData> {
+export async function fetchMarineWeather(lat: number, lon: number): Promise<MarineWeatherData | null> {
   // If browser is explicitly offline, immediately serve local cache if available
   if (typeof navigator !== 'undefined' && !navigator.onLine) {
     const cached = getCachedMarineWeather(lat, lon);
@@ -66,25 +66,44 @@ export async function fetchMarineWeather(lat: number, lon: number): Promise<Mari
     const weather = data.weather?.current;
     const daily = data.weather?.daily;
 
-    const temp = weather?.temperature_2m ?? 19;
-    const apparentTemp = weather?.apparent_temperature ?? 19;
-    const windSpeedKm = weather?.wind_speed_10m ?? 18;
-    const windSpeedKnots = Math.round(windSpeedKm * 0.539957 * 10) / 10;
-    const windDir = weather?.wind_direction_10m ?? 180;
-    const gusts = weather?.wind_gusts_10m ?? 24;
-    const pressure = weather?.surface_pressure ?? 1014;
-    const weatherCode = weather?.weather_code ?? 1;
+    const temp = weather?.temperature_2m;
+    const apparentTemp = weather?.apparent_temperature;
+    const windSpeedKm = weather?.wind_speed_10m;
+    const windSpeedKnots = typeof windSpeedKm === 'number' ? Math.round(windSpeedKm * 0.539957 * 10) / 10 : null;
+    const windDir = weather?.wind_direction_10m;
+    const gusts = weather?.wind_gusts_10m;
+    const pressure = weather?.surface_pressure;
+    const weatherCode = weather?.weather_code;
 
-    const waveHeight = marine?.wave_height ?? 1.8;
-    const wavePeriod = marine?.wave_period ?? 11;
-    const waveDir = marine?.wave_direction ?? 220;
-    const swellHeight = marine?.swell_wave_height ?? 1.6;
-    const swellPeriod = marine?.swell_wave_period ?? 12;
-    const swellDir = marine?.swell_wave_direction ?? 215;
+    const waveHeight = marine?.wave_height;
+    const wavePeriod = marine?.wave_period;
+    const waveDir = marine?.wave_direction;
+    const swellHeight = marine?.swell_wave_height;
+    const swellPeriod = marine?.swell_wave_period;
+    const swellDir = marine?.swell_wave_direction;
 
-    const sunrise = daily?.sunrise?.[0] ? new Date(daily.sunrise[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '06:15';
-    const sunset = daily?.sunset?.[0] ? new Date(daily.sunset[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '18:45';
-    const uvIndex = daily?.uv_index_max?.[0] ?? 6;
+    if (
+      typeof temp !== 'number' ||
+      typeof apparentTemp !== 'number' ||
+      typeof windSpeedKm !== 'number' ||
+      typeof windSpeedKnots !== 'number' ||
+      typeof windDir !== 'number' ||
+      typeof gusts !== 'number' ||
+      typeof pressure !== 'number' ||
+      typeof weatherCode !== 'number' ||
+      typeof waveHeight !== 'number' ||
+      typeof wavePeriod !== 'number' ||
+      typeof waveDir !== 'number' ||
+      typeof swellHeight !== 'number' ||
+      typeof swellPeriod !== 'number' ||
+      typeof swellDir !== 'number'
+    ) {
+      throw new Error('Marine weather response is incomplete');
+    }
+
+    const sunrise = daily?.sunrise?.[0] ? new Date(daily.sunrise[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : undefined;
+    const sunset = daily?.sunset?.[0] ? new Date(daily.sunset[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : undefined;
+    const uvIndex = typeof daily?.uv_index_max?.[0] === 'number' ? daily.uv_index_max[0] : undefined;
 
     // Calculate South African Angling & Surf Rating (1 - 10)
     let score = 7;
@@ -149,33 +168,8 @@ export async function fetchMarineWeather(lat: number, lon: number): Promise<Mari
       return localCached;
     }
 
-    // Realistic SA Coastal fallback if nothing was previously cached
-    return {
-      temperature: 20,
-      apparentTemperature: 19,
-      windSpeed: 16,
-      windSpeedKnots: 8.6,
-      windDirection: 190,
-      windGusts: 22,
-      surfacePressure: 1015,
-      weatherCode: 2,
-      waveHeight: 1.6,
-      wavePeriod: 12,
-      waveDirection: 210,
-      swellWaveHeight: 1.4,
-      swellWavePeriod: 13,
-      swellWaveDirection: 205,
-      sunrise: '06:12',
-      sunset: '18:48',
-      uvIndex: 6,
-      biteRating: {
-        score: 8,
-        label: 'Good',
-        summary: 'Gentle southerly breeze with clean 1.4m groundswell. Excellent surf gullies for Kob and Galjoen.',
-      },
-      cachedAt: new Date().toISOString(),
-      isOfflineSnapshot: true,
-    };
+    // No fabricated fallback: without live data or a cached snapshot, report unavailable.
+    return null;
   }
 }
 
