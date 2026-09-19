@@ -5,7 +5,9 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
+  const base = '/Fishing---logbook/';
   return {
+    base,
     plugins: [
       react(),
       tailwindcss(),
