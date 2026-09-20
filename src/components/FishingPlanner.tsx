@@ -59,6 +59,16 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
 
   const dataQuality = weather ? 'Live/cached weather + modeled tide + moon data' : 'Modeled tide + moon data; weather unavailable';
 
+  const decision = useMemo(() => {
+    const weatherScore = weather?.biteRating.score ?? 5;
+    const solunarScore = bestSolunar?.rating ? bestSolunar.rating * 2 : 5;
+    const tideScore = upcomingTides.length >= 2 ? 8 : upcomingTides.length === 1 ? 6 : 4;
+    const score = Math.round((weatherScore + solunarScore + tideScore) / 3);
+    if (score >= 8) return { label: 'Good window', tone: 'text-emerald-300', border: 'border-emerald-500/30', bg: 'bg-emerald-500/10', summary: 'Several useful signals line up. Conditions still need to be checked at the water.' };
+    if (score >= 6) return { label: 'Worth a try', tone: 'text-cyan-300', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10', summary: 'There are some useful signals, but the conditions are mixed.' };
+    return { label: 'Caution', tone: 'text-amber-300', border: 'border-amber-500/30', bg: 'bg-amber-500/10', summary: 'The available signals are not especially strong. Check local conditions before going.' };
+  }, [weather, bestSolunar, upcomingTides.length]);
+
   return (
     <section className="rounded-2xl border border-cyan-900/50 bg-slate-900/80 p-4 sm:p-5 shadow-xl">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -72,6 +82,16 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
         <span className="w-fit rounded-full border border-slate-700 bg-slate-950/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
           Decision support • not a catch guarantee
         </span>
+      </div>
+
+      <div className={`mt-4 rounded-xl border ${decision.border} ${decision.bg} p-3 sm:p-4`}>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className={`text-[10px] font-bold uppercase tracking-wider ${decision.tone}`}>Today’s decision support</div>
+            <div className={`mt-1 text-lg font-black ${decision.tone}`}>{decision.label}</div>
+          </div>
+          <div className="text-xs text-slate-300 sm:max-w-xl sm:text-right">{decision.summary}</div>
+        </div>
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
