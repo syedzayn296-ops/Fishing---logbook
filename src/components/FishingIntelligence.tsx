@@ -14,7 +14,7 @@ export const FishingIntelligence: React.FC<FishingIntelligenceProps> = ({ entrie
     return (
       <section className="mb-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
         <p className="text-[11px] font-bold uppercase tracking-wider text-cyan-400">Fishing Intelligence</p>
-        <p className="mt-1 text-sm text-slate-400">Log a few catches and this section will learn your patterns.</p>
+        <p className="mt-1 text-sm text-slate-400">Log catches to see simple patterns in your own history.</p>
       </section>
     );
   }
@@ -23,7 +23,7 @@ export const FishingIntelligence: React.FC<FishingIntelligenceProps> = ({ entrie
     <section className="mb-4 rounded-2xl border border-cyan-900/50 bg-slate-900/70 p-4 sm:p-5">
       <div className="mb-4">
         <p className="text-[11px] font-bold uppercase tracking-wider text-cyan-400">Fishing Intelligence</p>
-        <h3 className="text-base font-bold text-white">Patterns from your own catches</h3>
+        <h3 className="text-base font-bold text-white">Patterns in your own catches</h3>
         <p className="mt-1 text-xs text-slate-400">Offline analysis of your logbook — no cloud service required.</p>
       </div>
 
@@ -61,14 +61,14 @@ export const FishingIntelligence: React.FC<FishingIntelligenceProps> = ({ entrie
               <span>Spot: {pattern.topSpot ?? '—'}</span>
             </div>
             <div className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-              Pattern confidence: {pattern.confidence}
+              Repeat-count confidence: {pattern.confidence}
             </div>
           </div>
         ))}
       </div>
 
       <div className="mt-3 text-[11px] text-slate-500">
-        Confidence is based on repeat catches: 1–2 low, 3–4 building, 5+ strong. It describes your logbook data, not a guarantee of future catches.
+        Repeat-count confidence is descriptive only: 1–2 low, 3–4 building, 5+ strong. It does not establish causation or predict future catches.
       </div>
       <div className="mt-1 text-[11px] text-slate-500">
         Measurement coverage: {intelligence.measuredRate}% of logged catches include a length or weight.
