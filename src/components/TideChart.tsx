@@ -91,18 +91,23 @@ export const TideChart: React.FC<TideChartProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-bold text-white font-['Outfit',sans-serif]">
-              Astronomical Tide Graph
+              Tide Conditions
             </h2>
             <span className="text-xs px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800/60 font-mono">
-              Modeled • not official tide tables
+              Modelled estimate
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Modeled estimate • reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> ({location.regionName})
+          <p className="text-xs text-slate-400 mt-1">
+            Reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> · {location.regionName}
           </p>
-          <p className="text-[11px] text-amber-300/80 mt-1">
-            Height values are model-relative estimates, not SANHO chart-datum readings. Use official tide tables for navigation or safety-critical decisions.
-          </p>
+          <div className="flex flex-wrap items-center gap-2 mt-2">
+            <span className="inline-flex items-center rounded-full border border-amber-700/60 bg-amber-950/70 px-2 py-1 text-[10px] font-bold tracking-wider text-amber-300">
+              ⚠ NOT FOR NAVIGATION
+            </span>
+            <span className="text-[11px] text-slate-500">
+              Recreational fishing planning only · official tide tables remain the reference.
+            </span>
+          </div>
         </div>
 
         {/* Current Tide Quick Status Badges */}
