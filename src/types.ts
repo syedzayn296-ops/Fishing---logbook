@@ -9,9 +9,9 @@ export interface CoastalLocation {
   lon: number;
   description: string;
   keySpecies: string[];
-  tideOffsetMinutes: number; // Offset relative to reference tidal station (e.g. Table Bay or Durban)
+  tideOffsetMinutes: number; // Fallback-model phase offset; calibration status is documented separately
   tideStationName: string;
-  meanSpringRange: number; // in meters (e.g. 1.8m)
+  meanSpringRange: number; // Fallback-model spring range estimate in metres; not an official tide-table value
 }
 
 export interface TidePoint {
