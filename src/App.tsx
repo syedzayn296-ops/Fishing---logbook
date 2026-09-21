@@ -59,11 +59,43 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const tideData = useMemo(
-    () => calculateTidesForDay(selectedLocation, selectedDate),
-    // nowTick intentionally keeps today's current height/trend/next extremum live.
-    [selectedLocation, selectedDate, nowTick]
-  );
+  const modelTideData = useMemo(() => calculateTidesForDay(selectedLocation, selectedDate), [selectedLocation, selectedDate, nowTick]);
+  const [liveTide, setLiveTide] = useState<{ curvePoints: TidePoint[]; extrema: TideExtremum[]; source: TideSourceInfo } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const start = new Date(selectedDate); start.setHours(0, 0, 0, 0);
+    const end = new Date(start); end.setDate(end.getDate() + 1);
+    fetch(`/api/tides?lat=${selectedLocation.lat}&lon=${selectedLocation.lon}&start=${encodeURIComponent(start.toISOString())}&end=${encodeURIComponent(end.toISOString())}`)
+      .then((r) => { if (!r.ok) throw new Error('tide provider unavailable'); return r.json(); })
+      .then((payload) => {
+        const tl = payload?.timeline?.timeline ?? payload?.timeline?.data ?? payload?.timeline;
+        const ex = payload?.data?.extremes ?? payload?.data?.data ?? payload?.data;
+        const point = (x: any): TidePoint | null => { const t = new Date(x?.time ?? x?.timestamp ?? x?.datetime); const h = Number(x?.height ?? x?.value ?? x?.waterLevel); return !Number.isNaN(t.getTime()) && Number.isFinite(h) ? { time: t, height: Number(h.toFixed(2)) } : null; };
+        const curvePoints = (Array.isArray(tl) ? tl : []).map(point).filter(Boolean) as TidePoint[];
+        const extrema = (Array.isArray(ex) ? ex : []).map((x: any) => { const p = point(x); return p ? { ...p, type: String(x?.type ?? x?.event ?? '').toLowerCase().includes('high') ? 'high' : 'low' } as TideExtremum : null; }).filter(Boolean) as TideExtremum[];
+        if (!cancelled && curvePoints.length >= 2 && extrema.length >= 2) setLiveTide({ curvePoints, extrema, source: { source: 'live', provider: 'Open Waters / Neaps', fetchedAt: payload?.fetchedAt } });
+      }).catch(() => { if (!cancelled) setLiveTide(null); });
+    return () => { cancelled = true; };
+  }, [selectedLocation.lat, selectedLocation.lon, selectedDate]);
+
+  const tideData = useMemo(() => {
+    if (!liveTide) return modelTideData;
+    const now = new Date();
+    const points = liveTide.curvePoints;
+    let currentHeight = modelTideData.currentHeight;
+    let currentTrend = modelTideData.currentTrend;
+    for (let i = 0; i < points.length - 1; i++) {
+      if (points[i].time <= now && points[i + 1].time >= now) {
+        const span = points[i + 1].time.getTime() - points[i].time.getTime();
+        const ratio = span > 0 ? (now.getTime() - points[i].time.getTime()) / span : 0;
+        currentHeight = Number((points[i].height + (points[i + 1].height - points[i].height) * ratio).toFixed(2));
+        currentTrend = points[i + 1].height >= points[i].height ? 'Rising' : 'Falling';
+        break;
+      }
+    }
+    return { ...modelTideData, curvePoints: points, extrema: liveTide.extrema, currentHeight, currentTrend, nextExtremum: liveTide.extrema.find((e) => e.time.getTime() > Date.now()) ?? null };
+  }, [liveTide, modelTideData, nowTick]);
   const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
   const solunarPeriods = useMemo(() => getSolunarPeriods(selectedDate), [selectedDate]);
 
