@@ -103,7 +103,7 @@ export const TideChart: React.FC<TideChartProps> = ({
           </div>
           <p className="text-xs text-slate-400 mt-1">
             Source: <span className="text-slate-200 font-medium">{tideSource.provider}</span>
-            {tideSource.station ? <> · Station: <span className="text-slate-200 font-medium">{tideSource.station}</span></> : <> · Reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span></>}
+            {tideSource.station ? <> · Station: <span className="text-slate-200 font-medium">{tideSource.station}</span></> : <> · Model reference: <span className="text-slate-200 font-medium">{location.tideStationName}</span></>}
             {typeof tideSource.distanceKm === 'number' && <> · {tideSource.distanceKm.toFixed(1)} km</>}
             {tideSource.datum && <> · Datum: <span className="text-slate-200 font-medium">{tideSource.datum}</span></>}
           </p>
