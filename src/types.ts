@@ -12,6 +12,7 @@ export interface CoastalLocation {
   tideOffsetMinutes: number; // Fallback-model phase offset; calibration status is documented separately
   tideStationName: string;
   meanSpringRange: number; // Fallback-model spring range estimate in metres; not an official tide-table value
+  tideCalibrationStatus: 'unverified'; // Until port-specific harmonic/official calibration is independently checked
 }
 
 export interface TidePoint {
