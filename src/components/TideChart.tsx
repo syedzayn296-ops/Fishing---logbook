@@ -113,6 +113,7 @@ export const TideChart: React.FC<TideChartProps> = ({
             </span>
             <span className="text-[11px] text-slate-500">
               Recreational fishing planning only · official tide tables remain the reference.
+              {isModelFallback ? ' Local fallback calibration is unverified.' : ''}
             </span>
           </div>
         </div>
