@@ -60,10 +60,10 @@ export default function App() {
   }, []);
 
   const modelTideData = useMemo(() => calculateTidesForDay(selectedLocation, selectedDate), [selectedLocation, selectedDate, nowTick]);
-  const [liveTide, setLiveTide] = useState<{ curvePoints: TidePoint[]; extrema: TideExtremum[]; source: TideSourceInfo } | null>(null);
-
   useEffect(() => {
     let cancelled = false;
+    // Never display a previous location/date as if it were the new live source while a request is in flight.
+    setLiveTide(null);
     const start = new Date(selectedDate); start.setHours(0, 0, 0, 0);
     const end = new Date(start); end.setDate(end.getDate() + 1);
     fetch(`/api/tides?lat=${selectedLocation.lat}&lon=${selectedLocation.lon}&start=${encodeURIComponent(start.toISOString())}&end=${encodeURIComponent(end.toISOString())}`)
@@ -84,7 +84,20 @@ export default function App() {
           return p && type ? { ...p, type } as TideExtremum : null;
         }).filter(Boolean) as TideExtremum[];
         const distanceKm = Number(payload?.distance);
-        if (!cancelled && curvePoints.length >= 2 && extrema.length >= 2) {
+        const stationName = String(payload?.station?.name ?? payload?.station?.source?.name ?? '').trim();
+        const datum = String(payload?.datum ?? '').trim();
+        // Conservative product gate: only trust a live prediction when the provider identifies
+        // a station, supplies a finite distance/datum, and the station is reasonably close.
+        // Otherwise the app stays on the local model rather than presenting an unverified value.
+        const liveSourceIsUsable =
+          curvePoints.length >= 2 &&
+          extrema.length >= 2 &&
+          stationName.length > 0 &&
+          Number.isFinite(distanceKm) &&
+          distanceKm >= 0 &&
+          distanceKm <= 50 &&
+          datum.length > 0;
+        if (!cancelled && liveSourceIsUsable) {
           setLiveTide({
             curvePoints,
             extrema,
@@ -92,9 +105,9 @@ export default function App() {
               source: 'live',
               provider: 'Open Waters / Neaps',
               fetchedAt: payload?.fetchedAt,
-              station: payload?.station?.name ?? payload?.station?.source?.name,
-              distanceKm: Number.isFinite(distanceKm) ? distanceKm : undefined,
-              datum: payload?.datum,
+              station: stationName,
+              distanceKm,
+              datum,
               units: payload?.units ?? 'meters',
             },
           });
