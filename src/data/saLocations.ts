@@ -14,6 +14,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 0,
     tideStationName: 'Table Bay Harbour',
     meanSpringRange: 1.7,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'false-bay-strand',
@@ -27,6 +28,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 8,
     tideStationName: 'Simon\'s Town Naval Base',
     meanSpringRange: 1.8,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'langebaan-lagoon',
@@ -40,6 +42,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 15,
     tideStationName: 'Saldanha Bay',
     meanSpringRange: 1.6,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'hermanus-walker-bay',
@@ -53,6 +56,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 12,
     tideStationName: 'Hermanus Old Harbour',
     meanSpringRange: 1.8,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'struisbaai-agulhas',
@@ -66,6 +70,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 18,
     tideStationName: 'Struisbaai Harbour',
     meanSpringRange: 1.9,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'breede-river-witsand',
@@ -79,6 +84,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 25,
     tideStationName: 'Breede River Entrance',
     meanSpringRange: 1.9,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'mossel-bay',
@@ -92,6 +98,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 30,
     tideStationName: 'Mossel Bay Harbour',
     meanSpringRange: 1.9,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'knysna-lagoon-heads',
@@ -105,6 +112,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 38,
     tideStationName: 'Knysna Heads',
     meanSpringRange: 1.9,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'jeffreys-bay-st-francis',
@@ -118,6 +126,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 44,
     tideStationName: 'Port St Francis',
     meanSpringRange: 2.0,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'gqeberha-port-elizabeth',
@@ -131,6 +140,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 48,
     tideStationName: 'Port Elizabeth Harbour',
     meanSpringRange: 2.0,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'east-london',
@@ -144,6 +154,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 52,
     tideStationName: 'East London Harbour',
     meanSpringRange: 2.0,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'wild-coast-port-st-johns',
@@ -157,6 +168,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 56,
     tideStationName: 'Port St. Johns',
     meanSpringRange: 2.1,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'durban-beaches',
@@ -170,6 +182,7 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 62,
     tideStationName: 'Durban Port Natal',
     meanSpringRange: 2.2,
+    tideCalibrationStatus: 'unverified',
   },
   {
     id: 'richards-bay-st-lucia',
@@ -183,5 +196,6 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 65,
     tideStationName: 'Richards Bay Harbour',
     meanSpringRange: 2.2,
+    tideCalibrationStatus: 'unverified',
   },
 ];
