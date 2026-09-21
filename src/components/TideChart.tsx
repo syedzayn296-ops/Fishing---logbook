@@ -45,9 +45,11 @@ export const TideChart: React.FC<TideChartProps> = ({
   const chartWidth = svgWidth - paddingLeft - paddingRight;
   const chartHeight = svgHeight - paddingTop - paddingBottom;
 
-  // Display range for the current model. These heights are NOT calibrated to SANHO chart datum.
+  // The fallback model is relative, not calibrated to a SANHO chart datum.
+  // Live provider curves can use their returned station heights.
+  const isModelFallback = tideSource.source !== 'live';
   const minHeight = 0.0;
-  const maxHeight = 2.4;
+  const maxHeight = Math.max(2.4, ...curvePoints.map((p) => p.height + 0.15));
 
   const getX = (date: Date) => {
     const hours = date.getHours() + date.getMinutes() / 60;
@@ -126,9 +128,9 @@ export const TideChart: React.FC<TideChartProps> = ({
               )}
             </div>
             <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Water Level</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{isModelFallback ? 'Modelled Level' : 'Water Level'}</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-white font-mono">{currentHeight}m</span>
+                <span className="text-base font-bold text-white font-mono">{currentHeight}m{isModelFallback ? <span className="text-[9px] text-amber-300/80"> relative</span> : null}</span>
                 <span className="text-xs text-cyan-300 font-medium">{currentTrend}</span>
               </div>
             </div>
@@ -147,7 +149,7 @@ export const TideChart: React.FC<TideChartProps> = ({
                   <span className="text-base font-bold text-amber-300 font-mono">
                     {nextExtremum.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
-                  <span className="text-xs text-slate-300 font-mono">({nextExtremum.height}m)</span>
+                  <span className="text-xs text-slate-300 font-mono">({nextExtremum.height}m{isModelFallback ? ' relative' : ''})</span>
                 </div>
               </div>
             </div>
@@ -164,7 +166,7 @@ export const TideChart: React.FC<TideChartProps> = ({
             <span className="text-slate-400 font-mono">
               {hoveredPoint.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}:
             </span>{' '}
-            <span className="text-cyan-300 font-bold font-mono">{hoveredPoint.height}m</span>
+            <span className="text-cyan-300 font-bold font-mono">{hoveredPoint.height}m{isModelFallback ? ' relative' : ''}</span>
           </div>
         )}
 
@@ -428,7 +430,7 @@ export const TideChart: React.FC<TideChartProps> = ({
                   {ext.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
                 <span className="text-sm font-semibold text-cyan-400 font-mono">
-                  {ext.height}m
+                  {ext.height}m{isModelFallback ? ' relative' : ''}
                 </span>
               </div>
             </div>
