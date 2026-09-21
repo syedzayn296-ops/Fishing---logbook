@@ -228,7 +228,7 @@ export default function App() {
                 <span className="text-xs text-blue-400 font-semibold group-hover:translate-x-1 transition">View Guide →</span>
               </div>
               <div onClick={() => setActiveTab('ai-identify')} className="bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
-                <div><span className="text-xs uppercase font-bold text-amber-400 block tracking-wider">Catch Analyzer</span><h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition">Identify a Fish or Check Minimum Size</h4><p className="text-xs text-slate-400 mt-0.5">Snap a photo to verify DFFE legal requirements</p></div>
+                <div><span className="text-xs uppercase font-bold text-amber-400 block tracking-wider">Catch Analyzer</span><h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition">Identify a Fish or View Species Reference</h4><p className="text-xs text-slate-400 mt-0.5">Snap a photo to assist with species identification; verify current DFFE rules separately</p></div>
                 <span className="text-xs text-amber-400 font-semibold group-hover:translate-x-1 transition">Launch AI →</span>
               </div>
             </div>
