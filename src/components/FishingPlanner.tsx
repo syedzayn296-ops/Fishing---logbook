@@ -110,7 +110,7 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
         </div>
         <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-3">
           <CalendarClock className="mb-2 h-4 w-4 text-amber-400" />
-          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Next useful window</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Next tide window</div>
           <div className="mt-1 text-sm font-bold text-white">{upcomingTides[0] ? `${upcomingTides[0].type === 'high' ? 'High' : 'Low'} • ${formatTime(upcomingTides[0].time)}` : '—'}</div>
           <div className="mt-1 text-[11px] text-slate-400">Modelled tide turn; combine with conditions</div>
         </div>
