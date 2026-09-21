@@ -90,7 +90,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, locationN
         </div>
       </div>
 
-      {/* South Africa Angler's Surf & Sea Condition Forecast Box */}
+      {/* Marine condition guidance — not a fish-activity forecast */}
       <div className={`mt-4 p-4 rounded-xl border shadow-lg ${getBiteBadgeClass(weather.biteRating.label)}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -197,10 +197,10 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, locationN
             </div>
             <span className="text-[11px] text-slate-400 mt-1 block">
               {weather.surfacePressure >= 1018
-                ? 'High Pressure (Steady Bites)'
+                ? 'High Pressure'
                 : weather.surfacePressure <= 1010
-                ? 'Low Front (Pre-Front Frenzy)'
-                : 'Neutral Stable Barometer'}
+                ? 'Lower Pressure'
+                : 'Mid-range Pressure'}
             </span>
           </div>
         </div>
