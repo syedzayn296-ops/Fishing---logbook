@@ -84,8 +84,8 @@ export const AiSpeciesIdentifier: React.FC<AiSpeciesIdentifierProps> = ({ onLogC
       location: locationName,
       notes: `Identified by Gemini AI: ${result.scientificName}. ${result.summary}`,
       photoUrl: selectedImage || undefined,
-      isLegal: !result.southAfricanRegulations.isLegalSizeForUser.toLowerCase().includes('illegal') &&
-               !result.southAfricanRegulations.isLegalSizeForUser.toLowerCase().includes('undersize'),
+      // AI legal assessment is never converted into a keep/return decision.
+      isLegal: undefined,
     });
     setLoggedSuccess(true);
   };
@@ -106,7 +106,7 @@ export const AiSpeciesIdentifier: React.FC<AiSpeciesIdentifierProps> = ({ onLogC
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-              Snap or upload a photo of your catch on the rocks, beach, or boat. The AI evaluates species markers against South African DFFE recreational minimum size limits and WWF-SASSI lists.
+              Snap or upload a photo of your catch on the rocks, beach, or boat. The AI assists with species identification; current DFFE legal rules are shown only when independently verified.
             </p>
           </div>
         </div>
@@ -253,7 +253,7 @@ export const AiSpeciesIdentifier: React.FC<AiSpeciesIdentifierProps> = ({ onLogC
             ) : (
               <>
                 <Sparkles className="w-4 h-4 text-slate-950" />
-                <span>Identify Species & Check Regulations</span>
+                <span>Identify Species & View Regulatory Status</span>
               </>
             )}
           </button>
@@ -308,14 +308,16 @@ export const AiSpeciesIdentifier: React.FC<AiSpeciesIdentifierProps> = ({ onLogC
                   result.southAfricanRegulations.isLegalSizeForUser.toLowerCase().includes('illegal') ||
                   result.southAfricanRegulations.isLegalSizeForUser.toLowerCase().includes('prohibited')
                     ? 'bg-rose-950/40 border-rose-800 text-rose-200'
-                    : 'bg-emerald-950/40 border-emerald-800 text-emerald-200'
+                    : result.southAfricanRegulations.isLegalSizeForUser.toLowerCase().includes('verify')
+                    ? 'bg-amber-950/40 border-amber-800 text-amber-200'
+                    : 'bg-slate-800/60 border-slate-700 text-slate-200'
                 }`}
               >
                 <div className="flex items-start gap-2">
                   <Shield className="w-4 h-4 shrink-0 mt-0.5" />
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider block">
-                      South African Legal Assessment
+                      South African Legal Verification
                     </span>
                     <p className="text-xs mt-1 font-medium leading-relaxed">
                       {result.southAfricanRegulations.isLegalSizeForUser}
