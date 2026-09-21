@@ -472,15 +472,15 @@ export const TideChart: React.FC<TideChartProps> = ({
           <p className="text-xs text-slate-400 mt-3 leading-relaxed">
             {moonInfo.isSpringTide ? (
               <span>
-                <strong className="text-amber-300">Spring Tide in South Africa:</strong> Highest tidal movement of the month. Massive water surge through estuary mouths (Breede, Swartkops, Knysna) and churning surf. Ideal for Galjoen, Kob, and bait gathering at extreme low water!
+                <strong className="text-amber-300">Spring-tide period:</strong> Larger tidal range is expected around this lunar phase. Local current strength and actual water levels can vary with weather, bathymetry and location. Use this as planning guidance, not a guarantee of fish activity.
               </span>
             ) : moonInfo.springOrNeap === 'Neap Tide' ? (
               <span>
-                <strong className="text-blue-300">Neap Tide in South Africa:</strong> Gentle tidal current with lower water exchange. Better for offshore boat fishing, bottom dropping over deep reefs, and clearer visibility.
+                <strong className="text-blue-300">Neap-tide period:</strong> Smaller tidal range is expected around this lunar phase. Local current strength and water exchange vary by location and conditions, so treat this as planning guidance rather than a fishing-outcome prediction.
               </span>
             ) : (
               <span>
-                <strong className="text-slate-200">Moderate Tidal Range:</strong> Steady water flow ideal for rock and surf anglers working sandy gutters and estuary channel drop-offs.
+                <strong className="text-slate-200">Moderate tidal range:</strong> The expected tidal range is between spring and neap conditions. Local current and fishing conditions still depend on the actual tide, weather, location and other factors.
               </span>
             )}
           </p>
@@ -492,11 +492,11 @@ export const TideChart: React.FC<TideChartProps> = ({
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <h3 className="text-sm font-bold text-white font-['Outfit',sans-serif]">
-                Best Fishing Windows
+                Fishing Windows
               </h3>
             </div>
             <span className="text-[11px] text-amber-400/90 font-medium">
-              Major & Minor
+              Solunar guidance
             </span>
           </div>
 
