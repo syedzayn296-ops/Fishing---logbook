@@ -107,7 +107,7 @@ export async function fetchMarineWeather(lat: number, lon: number): Promise<Mari
 
     // Calculate a transparent marine-condition score (1 - 10). This is not a fish-catch prediction.
     let score = 7;
-    let label: 'Very Rough' | 'Calm' | 'Moderate' | 'Favourable' | 'Strong Conditions' = 'Good';
+    let label: 'Very Rough' | 'Calm' | 'Moderate' | 'Favourable' | 'Strong Conditions' = 'Moderate';
     let summary = 'Marine conditions are moderate based on the available wind and wave inputs.';
 
     if (waveHeight > 3.2 || windSpeedKnots > 24) {
