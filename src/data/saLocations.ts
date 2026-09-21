@@ -14,6 +14,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 0,
     tideStationName: 'Table Bay Harbour',
     meanSpringRange: 1.7,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -28,6 +30,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 8,
     tideStationName: 'Simon\'s Town Naval Base',
     meanSpringRange: 1.8,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -42,6 +46,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 15,
     tideStationName: 'Saldanha Bay',
     meanSpringRange: 1.6,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -56,6 +62,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 12,
     tideStationName: 'Hermanus Old Harbour',
     meanSpringRange: 1.8,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -70,6 +78,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 18,
     tideStationName: 'Struisbaai Harbour',
     meanSpringRange: 1.9,
+    tideReferenceSource: 'No direct HO-2 port',
+    tideReferencePort: false,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -84,6 +94,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 25,
     tideStationName: 'Breede River Entrance',
     meanSpringRange: 1.9,
+    tideReferenceSource: 'No direct HO-2 port',
+    tideReferencePort: false,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -98,6 +110,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 30,
     tideStationName: 'Mossel Bay Harbour',
     meanSpringRange: 1.9,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -112,6 +126,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 38,
     tideStationName: 'Knysna Heads',
     meanSpringRange: 1.9,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -126,6 +142,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 44,
     tideStationName: 'Port St Francis',
     meanSpringRange: 2.0,
+    tideReferenceSource: 'No direct HO-2 port',
+    tideReferencePort: false,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -140,6 +158,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 48,
     tideStationName: 'Port Elizabeth Harbour',
     meanSpringRange: 2.0,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -154,6 +174,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 52,
     tideStationName: 'East London Harbour',
     meanSpringRange: 2.0,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -168,6 +190,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 56,
     tideStationName: 'Port St. Johns',
     meanSpringRange: 2.1,
+    tideReferenceSource: 'No direct HO-2 port',
+    tideReferencePort: false,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -182,6 +206,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 62,
     tideStationName: 'Durban Port Natal',
     meanSpringRange: 2.2,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
   {
@@ -196,6 +222,8 @@ export const SA_FISHING_LOCATIONS: CoastalLocation[] = [
     tideOffsetMinutes: 65,
     tideStationName: 'Richards Bay Harbour',
     meanSpringRange: 2.2,
+    tideReferenceSource: 'SANHO HO-2',
+    tideReferencePort: true,
     tideCalibrationStatus: 'unverified',
   },
 ];
