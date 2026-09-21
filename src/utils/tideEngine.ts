@@ -87,7 +87,8 @@ export function calculateTidesForDay(
   // Base range adjustment
   const springMultiplier = isSpring ? 1.25 : isNeap ? 0.75 : 1.0;
   const amplitude = (location.meanSpringRange / 2) * springMultiplier;
-  // Fallback model is relative. Chart datum / mean sea level is port-specific and must not be invented.\n  const meanSeaLevel = 0;
+  // Fallback model is relative. Chart datum / mean sea level is port-specific and must not be invented.
+  const meanSeaLevel = 0;
 
   // Semi-diurnal cycle: 12h 25m = 745.2 minutes
   const tidalPeriodHours = 12.4206; 
