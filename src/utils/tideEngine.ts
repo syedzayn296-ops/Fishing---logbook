@@ -68,7 +68,7 @@ export function getMoonPhaseInfo(date: Date): MoonPhaseInfo {
 
 /**
  * Calculates continuous tide height and extrema for a location and base date.
- * Uses South African tidal harmonic approximations (semi-diurnal M2 + S2).
+ * Uses a relative fallback sinusoidal approximation (M2/S2-like components); it is not a calibrated official tide prediction.
  */
 export function calculateTidesForDay(
   location: CoastalLocation,
@@ -238,28 +238,28 @@ export function getSolunarPeriods(baseDate: Date): SolunarPeriod[] {
       startTime: major1Start,
       endTime: major1End,
       rating: baseRating,
-      description: 'Lunar Transit: Peak feeding window. Fish actively hunt baitfish along surf gutters and reef drop-offs.',
+      description: 'Lunar transit window: potentially useful feeding period. Combine with tide, weather, location and catch history.',
     },
     {
       type: 'Major',
       startTime: major2Start,
       endTime: major2End,
       rating: baseRating,
-      description: 'Lunar Underfoot: Secondary peak feeding window. Outstanding for night estuarine Kob and Grunter.',
+      description: 'Lunar underfoot window: potentially useful feeding period. Combine with tide, weather, location and catch history.',
     },
     {
       type: 'Minor',
       startTime: minor1Start,
       endTime: minor1End,
       rating: Math.max(1, baseRating - 1),
-      description: 'Moonrise Window: Increased predatory activity around rocky ledges and estuary mouth.',
+      description: 'Moonrise window: approximate minor feeding period; local conditions can dominate.',
     },
     {
       type: 'Minor',
       startTime: minor2Start,
       endTime: minor2End,
       rating: Math.max(1, baseRating - 1),
-      description: 'Moonset Window: Short burst of surface bites and schooling activity.',
+      description: 'Moonset window: approximate minor feeding period; local conditions can dominate.',
     },
   ];
 }
