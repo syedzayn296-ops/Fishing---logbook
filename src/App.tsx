@@ -19,6 +19,8 @@ import { OfflineIndicator } from './components/OfflineIndicator';
 import { Waves, Sparkles, MapPin, Compass, AlertCircle } from 'lucide-react';
 
 const STORAGE_KEY = 'sa_fishing_logbook_v1';
+const WEATHER_REFRESH_MS = 60 * 60 * 1000;
+const TIDE_CLOCK_REFRESH_MS = 60 * 1000;
 
 /* Legacy demo data removed: new installs and existing demo entries now start empty. */
 
@@ -28,6 +30,7 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [weather, setWeather] = useState<MarineWeatherData | null>(() => getCachedMarineWeather(SA_FISHING_LOCATIONS[1].lat, SA_FISHING_LOCATIONS[1].lon));
   const [weatherLoading, setWeatherLoading] = useState(false);
+  const [nowTick, setNowTick] = useState(() => Date.now());
 
   const [catches, setCatches] = useState<CatchLogEntry[]>(() => {
     try {
@@ -42,7 +45,6 @@ export default function App() {
     // Fresh installs start empty so Fishing Intelligence is based only on the angler's real catches.
     // Also remove the old built-in demo catches from existing local storage.
     return [];
-
   });
 
   useEffect(() => {
@@ -50,7 +52,17 @@ export default function App() {
     catch (e) { console.error('Failed to save catches:', e); }
   }, [catches]);
 
-  const tideData = useMemo(() => calculateTidesForDay(selectedLocation, selectedDate), [selectedLocation, selectedDate]);
+  // Keep the "NOW" tide status and current tide trend moving while the app stays open.
+  useEffect(() => {
+    const timer = window.setInterval(() => setNowTick(Date.now()), TIDE_CLOCK_REFRESH_MS);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const tideData = useMemo(
+    () => calculateTidesForDay(selectedLocation, selectedDate),
+    // nowTick intentionally keeps today's current height/trend/next extremum live.
+    [selectedLocation, selectedDate, nowTick]
+  );
   const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
   const solunarPeriods = useMemo(() => getSolunarPeriods(selectedDate), [selectedDate]);
 
@@ -60,10 +72,27 @@ export default function App() {
     setWeatherLoading(true);
     fetchMarineWeather(lat, lon)
       .then((data) => { setWeather(data); setWeatherLoading(false); })
-      .catch((err) => { console.warn('Unable to reach live weather service, falling back to cache:', err); setWeatherLoading(false); });
+      .catch((err) => {
+        console.warn('Unable to reach live weather service, falling back to cache:', err);
+        setWeatherLoading(false);
+      });
   }, []);
 
-  useEffect(() => { loadWeatherForLocation(selectedLocation.lat, selectedLocation.lon); }, [selectedLocation.lat, selectedLocation.lon, loadWeatherForLocation]);
+  // Fetch immediately when the selected location changes.
+  useEffect(() => {
+    loadWeatherForLocation(selectedLocation.lat, selectedLocation.lon);
+  }, [selectedLocation.lat, selectedLocation.lon, loadWeatherForLocation]);
+
+  // Refresh the selected spot's live marine/weather data hourly while the app is open.
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      if (typeof navigator === 'undefined' || navigator.onLine) {
+        loadWeatherForLocation(selectedLocation.lat, selectedLocation.lon);
+      }
+    }, WEATHER_REFRESH_MS);
+
+    return () => window.clearInterval(timer);
+  }, [selectedLocation.lat, selectedLocation.lon, loadWeatherForLocation]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !navigator.onLine) return;
