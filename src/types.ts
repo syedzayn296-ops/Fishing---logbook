@@ -127,4 +127,15 @@ export interface FishIdentificationResult {
   handlingAndConservation: string;
   summary: string;
 }
-\nexport type TideDataSource = 'live' | 'model';\n\nexport interface TideSourceInfo {\n  source: TideDataSource;\n  provider: string;\n  fetchedAt?: string;\n  station?: string;\n  distanceKm?: number;\n  datum?: string;\n  units?: string;\n}\n
+
+export type TideDataSource = 'live' | 'model';
+
+export interface TideSourceInfo {
+  source: TideDataSource;
+  provider: string;
+  fetchedAt?: string;
+  station?: string;
+  distanceKm?: number;
+  datum?: string;
+  units?: string;
+}
