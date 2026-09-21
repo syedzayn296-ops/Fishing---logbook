@@ -41,7 +41,7 @@ export const CatchLogbook: React.FC<CatchLogbookProps> = ({
 
   // Check legal status against SA Species Database
   const targetSpecies = SA_SPECIES_DATABASE.find((s) => s.commonName === speciesName);
-  const minLegal = targetSpecies?.minLegalSizeCm ?? null;
+  const minLegal = targetSpecies?.legalRulesVerified ? targetSpecies.minLegalSizeCm : null;
   const isUndersize = minLegal !== null && lengthCm !== '' && parseFloat(lengthCm) < minLegal;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -107,7 +107,7 @@ export const CatchLogbook: React.FC<CatchLogbookProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Log catches along the South African coast. Identify your most productive fishing spots, track successful tides, baits, and species frequency.
+              Log catches along the South African coast. Review your logged locations, tide states, baits, and species frequency over time.
             </p>
           </div>
 
@@ -373,7 +373,7 @@ export const CatchLogbook: React.FC<CatchLogbookProps> = ({
           {/* Notes */}
           <div>
             <label className="text-xs font-bold uppercase tracking-wider text-slate-300 block mb-1">
-              Field Notes (Water clarity, bite time, rig details)
+              Field Notes (Water clarity, timing, rig details)
             </label>
             <input
               type="text"
