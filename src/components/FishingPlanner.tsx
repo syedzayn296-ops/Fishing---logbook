@@ -66,7 +66,7 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
     const score = Math.round((weatherScore + solunarScore + tideScore) / 3);
     if (score >= 8) return { label: 'Good window', tone: 'text-emerald-300', border: 'border-emerald-500/30', bg: 'bg-emerald-500/10', summary: 'Several useful signals line up. Conditions still need to be checked at the water.' };
     if (score >= 6) return { label: 'Worth a try', tone: 'text-cyan-300', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10', summary: 'There are some useful signals, but the conditions are mixed.' };
-    return { label: 'Caution', tone: 'text-amber-300', border: 'border-amber-500/30', bg: 'bg-amber-500/10', summary: 'The available signals are not especially strong. Check local conditions before going.' };
+    return { label: 'Caution', tone: 'text-amber-300', border: 'border-amber-500/30', bg: 'bg-amber-500/10', summary: 'The available signals are limited or mixed. Check local conditions before going.' };
   }, [weather, bestSolunar, upcomingTides.length]);
 
   return (
@@ -74,7 +74,7 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-wider text-cyan-400">Fishing Planner</p>
-          <h2 className="mt-1 text-lg font-black text-white">Should I fish {dayMatches(selectedDate, new Date()) ? 'today' : 'this day'}?</h2>
+          <h2 className="mt-1 text-lg font-black text-white">Plan for {dayMatches(selectedDate, new Date()) ? 'today' : 'this day'}</h2>
           <p className="mt-1 text-xs text-slate-400">
             {location.name} • {selectedDate.toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })}
           </p>
@@ -85,9 +85,10 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
       </div>
 
       <div className={`mt-4 rounded-xl border ${decision.border} ${decision.bg} p-3 sm:p-4`}>
+        <p className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">Combined guidance from marine conditions, tide model, solunar timing and your logged history</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className={`text-[10px] font-bold uppercase tracking-wider ${decision.tone}`}>Today’s decision support</div>
+            <div className={`text-[10px] font-bold uppercase tracking-wider ${decision.tone}`}>Planning signal</div>
             <div className={`mt-1 text-lg font-black ${decision.tone}`}>{decision.label}</div>
           </div>
           <div className="text-xs text-slate-300 sm:max-w-xl sm:text-right">{decision.summary}</div>
@@ -103,7 +104,7 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
         </div>
         <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-3">
           <Wind className="mb-2 h-4 w-4 text-blue-400" />
-          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Sea conditions</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Marine conditions</div>
           <div className="mt-1 text-sm font-bold text-white">{weather ? weather.biteRating.label : 'Unavailable'}</div>
           <div className="mt-1 text-[11px] text-slate-400">{weather ? `${weather.windSpeedKnots} kts wind • ${weather.swellWaveHeight ?? weather.waveHeight ?? '—'}m swell` : 'No live/cached marine weather'}</div>
         </div>
@@ -137,7 +138,7 @@ export const FishingPlanner: React.FC<FishingPlannerProps> = ({
         </div>
         <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
           <div className="flex items-center gap-2 text-sm font-bold text-slate-200">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" /> Best combined clue
+            <ShieldCheck className="h-4 w-4 text-emerald-400" /> Solunar timing
           </div>
           <p className="mt-2 text-xs leading-relaxed text-slate-400">
             {bestSolunar
