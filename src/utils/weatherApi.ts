@@ -105,27 +105,27 @@ export async function fetchMarineWeather(lat: number, lon: number): Promise<Mari
     const sunset = daily?.sunset?.[0] ? new Date(daily.sunset[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : undefined;
     const uvIndex = typeof daily?.uv_index_max?.[0] === 'number' ? daily.uv_index_max[0] : undefined;
 
-    // Calculate South African Angling & Surf Rating (1 - 10)
+    // Calculate a transparent marine-condition score (1 - 10). This is not a fish-catch prediction.
     let score = 7;
     let label: 'Poor' | 'Fair' | 'Good' | 'Excellent' | 'Prime Time' = 'Good';
-    let summary = 'Favorable coastal conditions with workable surf and active water movement.';
+    let summary = 'Marine conditions are moderate based on the available wind and wave inputs.';
 
     if (waveHeight > 3.2 || windSpeedKnots > 24) {
       score = 3;
       label = 'Poor';
-      summary = 'Heavy sea state and gale or strong winds. Dangerous rocky ledges; seek sheltered bays or estuaries.';
+      summary = 'Strong wind and/or high wave conditions. Use caution and assess local conditions before fishing.';
     } else if (waveHeight < 0.8 && windSpeedKnots < 5) {
       score = 5;
       label = 'Fair';
-      summary = 'Flat calm crystalline water. Inshore species like Galjoen and Kob may be shy; light tackle and deep channels recommended.';
+      summary = 'Light wind and low wave conditions. Local water clarity and fish activity are not predicted by this score.';
     } else if (swellPeriod >= 11 && swellHeight >= 1.2 && swellHeight <= 2.2 && windSpeedKnots <= 14) {
       score = 9;
       label = 'Prime Time';
-      summary = 'Exceptional fishing conditions! Clean groundswell creating ideal foamy gutters, gullies, and active predatory strikes.';
+      summary = 'The wind, swell height and swell period fall within a favourable marine-condition range; local fishing activity can still vary.';
     } else if (swellHeight <= 2.5 && windSpeedKnots <= 18) {
       score = 7;
       label = 'Good';
-      summary = 'Solid angling conditions. Good water oxygenation and steady baitfish activity along beaches and reefs.';
+      summary = 'Wind and swell are within a moderate range for coastal angling; local conditions can still vary.';
     }
 
     const weatherResult: MarineWeatherData = {
