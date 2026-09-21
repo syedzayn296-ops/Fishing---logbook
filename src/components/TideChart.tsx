@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CoastalLocation, MoonPhaseInfo, SolunarPeriod, TideExtremum, TidePoint } from '../types';
+import { CoastalLocation, MoonPhaseInfo, SolunarPeriod, TideExtremum, TidePoint, TideSourceInfo } from '../types';
 import { Waves, ArrowUpRight, ArrowDownRight, Clock, Moon, Sun, Sparkles, Compass } from 'lucide-react';
 
 interface TideChartProps {
@@ -10,6 +10,7 @@ interface TideChartProps {
   currentHeight: number;
   currentTrend: string;
   nextExtremum: TideExtremum | null;
+  tideSource: TideSourceInfo;
   moonInfo: MoonPhaseInfo;
   solunarPeriods: SolunarPeriod[];
   sunrise?: string;
@@ -24,6 +25,7 @@ export const TideChart: React.FC<TideChartProps> = ({
   currentHeight,
   currentTrend,
   nextExtremum,
+  tideSource,
   moonInfo,
   solunarPeriods,
   sunrise = '06:15',
@@ -93,12 +95,12 @@ export const TideChart: React.FC<TideChartProps> = ({
             <h2 className="text-lg font-bold text-white font-['Outfit',sans-serif]">
               Tide Conditions
             </h2>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800/60 font-mono">
-              Modelled estimate
+            <span className={`text-xs px-2 py-0.5 rounded-full border font-mono ${tideSource.source === 'live' ? 'bg-emerald-950 text-emerald-300 border-emerald-800/60' : 'bg-amber-950 text-amber-300 border-amber-800/60'}`}>
+              {tideSource.source === 'live' ? 'LIVE PREDICTION' : 'MODELLED FALLBACK'}
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> · {location.regionName}
+            Source: <span className="text-slate-200 font-medium">{tideSource.provider}</span> · Reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> · {location.regionName}
           </p>
           <div className="flex flex-wrap items-center gap-2 mt-2">
             <span className="inline-flex items-center rounded-full border border-amber-700/60 bg-amber-950/70 px-2 py-1 text-[10px] font-bold tracking-wider text-amber-300">
