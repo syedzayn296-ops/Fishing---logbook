@@ -432,10 +432,10 @@ export const TideChart: React.FC<TideChartProps> = ({
       </div>
 
       {/* Bottom Row: Moon Phase & Solunar Bite Forecast */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5 pt-5 border-t border-slate-800/80">
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-5 pt-5 border-t border-slate-800/80 divide-y md:divide-y-0 md:divide-x divide-slate-800/80">
         
-        {/* Moon Phase & South African Tidal Cycle */}
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+        {/* Moon & Tide Cycle */}
+        <div className="py-4 md:pr-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-2xl">{moonInfo.icon}</span>
@@ -444,7 +444,7 @@ export const TideChart: React.FC<TideChartProps> = ({
                   {moonInfo.phaseName}
                 </h3>
                 <span className="text-xs text-slate-400">
-                  Lunar age: {moonInfo.ageDays} days • {moonInfo.illumination}% illuminated
+                  {moonInfo.ageDays} days old · {moonInfo.illumination}% illuminated
                 </span>
               </div>
             </div>
@@ -461,7 +461,7 @@ export const TideChart: React.FC<TideChartProps> = ({
             </span>
           </div>
 
-          <p className="text-xs text-slate-300 mt-3 leading-relaxed">
+          <p className="text-xs text-slate-400 mt-3 leading-relaxed">
             {moonInfo.isSpringTide ? (
               <span>
                 <strong className="text-amber-300">Spring Tide in South Africa:</strong> Highest tidal movement of the month. Massive water surge through estuary mouths (Breede, Swartkops, Knysna) and churning surf. Ideal for Galjoen, Kob, and bait gathering at extreme low water!
@@ -478,17 +478,17 @@ export const TideChart: React.FC<TideChartProps> = ({
           </p>
         </div>
 
-        {/* Solunar Peak Feeding Windows */}
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+        {/* Fishing Windows */}
+        <div className="py-4 md:pl-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <h3 className="text-sm font-bold text-white font-['Outfit',sans-serif]">
-                Solunar Bite Windows (Feeding Peak)
+                Best Fishing Windows
               </h3>
             </div>
             <span className="text-[11px] text-amber-400/90 font-medium">
-              Major & Minor Feeding
+              Major & Minor
             </span>
           </div>
 
