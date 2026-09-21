@@ -244,10 +244,10 @@ export const ProductiveSpotsMap: React.FC<ProductiveSpotsMapProps> = ({
           <MapPin className="w-6 h-6" />
         </div>
         <h3 className="text-sm font-bold text-white font-['Outfit',sans-serif]">
-          Productive Hotspots Map
+          Logged Catch Locations
         </h3>
         <p className="text-xs text-slate-400 max-w-md mx-auto">
-          Log catches with their coastal location to automatically map your most productive fishing spots along South Africa's shoreline.
+          Log catches with their coastal location to automatically group your logged catches by coastal location.
         </p>
       </div>
     );
@@ -263,7 +263,7 @@ export const ProductiveSpotsMap: React.FC<ProductiveSpotsMapProps> = ({
               <Compass className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-white font-['Outfit',sans-serif]">
-              Productive Spots Analysis
+              Catch Location Analysis
             </h3>
             <span className="px-2 py-0.5 rounded text-[11px] bg-emerald-950 text-emerald-300 font-semibold border border-emerald-800">
               {spots.length} Active {spots.length === 1 ? 'Spot' : 'Spots'}
@@ -326,10 +326,10 @@ export const ProductiveSpotsMap: React.FC<ProductiveSpotsMapProps> = ({
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
-                  Most Productive Spot
+                  Most Logged Spot
                 </span>
                 <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  🔥 #1 Catch Magnet
+                  Most logged
                 </span>
               </div>
               <h4 className="text-sm font-bold text-white font-['Outfit',sans-serif] mt-0.5">
@@ -528,7 +528,7 @@ export const ProductiveSpotsMap: React.FC<ProductiveSpotsMapProps> = ({
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"></span>
-                  <span>Multiple Catches (Hotspot)</span>
+                  <span>Multiple logged catches</span>
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-slate-700 inline-block"></span>
@@ -660,7 +660,7 @@ export const ProductiveSpotsMap: React.FC<ProductiveSpotsMapProps> = ({
         </div>
       )}
 
-      {/* VIEW B: RANKED PRODUCTIVE SPOTS LIST & BENTO CARDS */}
+      {/* VIEW B: RANKED CATCH LOCATIONS LIST & BENTO CARDS */}
       {viewMode === 'ranked-list' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {spots.map((spot, index) => {
