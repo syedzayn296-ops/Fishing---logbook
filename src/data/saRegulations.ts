@@ -88,10 +88,9 @@ export const SA_GENERAL_REGULATIONS = {
   ],
 };
 
-
 export const SA_REGULATORY_SOURCES = [
   { title: 'DFFE / MLRA Regulations — Recreational Fishing (Annexure 7)', url: 'https://www.dffe.gov.za/sites/default/files/legislations/mlra_regulations_gnr1111.pdf', note: 'Primary legal reference for recreational fishing species, size limits, bag limits and closed seasons.' },
   { title: 'DFFE — Shad / Elf closed-season clarification (12 Sep 2025)', url: 'https://www.dffe.gov.za/mediarelease/george_shadclosedseason', note: 'DFFE confirms the closed season is 1 October to 30 November each year.' },
-  { title: 'DFFE — Recreational fishing e-permit platform', url: 'https://www.fishing.dffe.gov.za/', note: 'Official permit platform; check the current permit conditions before fishing or retaining a catch.' }
+  { title: 'DFFE — Recreational fishing e-permit platform', url: 'https://www.fishing.dffe.gov.za/', note: 'Official permit platform; check the current permit conditions before fishing or retaining a catch.' },
   { title: 'DFFE — 2026 Fishing Permit Conditions', url: 'https://www.dffe.gov.za/sites/default/files/docs/licensesandpermits/conditions2026sectionBgeneral.pdf', note: 'Current 2026 permit-condition reference. Check the conditions that apply to your permit before fishing.' }
 ];
