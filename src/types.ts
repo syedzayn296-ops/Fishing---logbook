@@ -13,6 +13,8 @@ export interface CoastalLocation {
   tideStationName: string;
   meanSpringRange: number; // Fallback-model spring range estimate in metres; not an official tide-table value
   tideCalibrationStatus: 'unverified'; // Until port-specific harmonic/official calibration is independently checked
+  tideReferenceSource?: 'SANHO HO-2' | 'No direct HO-2 port'; // Validation/reference source only; not the app's prediction feed
+  tideReferencePort?: boolean; // True only for locations represented directly in SANHO HO-2
 }
 
 export interface TidePoint {
