@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { FishSpecies, CoastRegion, SassiStatus } from '../types';
 import { SA_SPECIES_DATABASE } from '../data/saSpecies';
-import { Search, Filter, Shield, AlertCircle, Info, Sparkles, Compass, Check, X } from 'lucide-react';
+import { Search, Shield, AlertCircle, Check, X } from 'lucide-react';
 
 export const SpeciesGuide: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,7 +77,7 @@ export const SpeciesGuide: React.FC = () => {
               South African Angling Species Identification & Legal Guide
             </h2>
             <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-              Official recreational regulations specified under the Department of Forestry, Fisheries and the Environment (DFFE) Marine Living Resources Act, coupled with WWF-SASSI conservation classifications.
+              Species identification and practical guidance. Legal size, bag-limit and closed-season data are shown only after independent verification against current DFFE rules.
             </p>
           </div>
           <div className="shrink-0 flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700 text-xs text-slate-300">
@@ -189,6 +189,10 @@ export const SpeciesGuide: React.FC = () => {
 
       </div>
 
+      <div className="bg-amber-950/30 border border-amber-700/40 rounded-xl p-3 text-xs text-amber-200">
+        <strong>Legal-data safeguard:</strong> This guide shows <strong>VERIFY WITH DFFE</strong> until a species rule has passed the app's independent current-rule audit. Do not use an unverified number to decide whether to keep a fish.
+      </div>
+
       {/* Species Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredSpecies.map((fish) => {
@@ -231,7 +235,7 @@ export const SpeciesGuide: React.FC = () => {
                       Min Legal Size
                     </span>
                     <span className="text-sm font-bold text-amber-300 font-mono">
-                      {fish.legalSizeLabel || (fish.minLegalSizeCm ? `${fish.minLegalSizeCm} cm` : 'No min size')}
+                      {fish.legalRulesVerified ? (fish.legalSizeLabel || (fish.minLegalSizeCm ? `${fish.minLegalSizeCm} cm` : 'No min size')) : 'VERIFY WITH DFFE'}
                     </span>
                   </div>
 
@@ -240,16 +244,23 @@ export const SpeciesGuide: React.FC = () => {
                       Daily Bag Limit
                     </span>
                     <span className="text-sm font-bold text-cyan-300 font-mono">
-                      {fish.bagLimitLabel || (fish.maxBagLimit ? `${fish.maxBagLimit} per day` : 'Unlimited')}
+                      {fish.legalRulesVerified ? (fish.bagLimitLabel || (fish.maxBagLimit ? `${fish.maxBagLimit} per day` : 'Unlimited')) : 'VERIFY WITH DFFE'}
                     </span>
                   </div>
                 </div>
 
                 {/* Closed Season Warning if any */}
-                {fish.closedSeason && (
+                {fish.closedSeason && fish.legalRulesVerified && (
                   <div className="mt-2 flex items-start gap-1.5 p-2 rounded-lg bg-rose-950/40 border border-rose-800/50 text-[11px] text-rose-300">
                     <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
                     <span><strong>Closed Season:</strong> {fish.closedSeason}</span>
+                  </div>
+                )}
+
+                {!fish.legalRulesVerified && (
+                  <div className="mt-2 flex items-start gap-1.5 p-2 rounded-lg bg-amber-950/40 border border-amber-800/50 text-[11px] text-amber-200">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                    <span><strong>Legal rule not yet verified.</strong> Check the current DFFE regulation before retaining this species.</span>
                   </div>
                 )}
 
@@ -347,28 +358,33 @@ export const SpeciesGuide: React.FC = () => {
                 <Shield className="w-4 h-4" />
                 South African Regulation Data
               </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                <div>
-                  <span className="text-slate-400 block font-medium">Minimum Size:</span>
-                  <span className="text-sm font-bold text-amber-300 font-mono">
-                    {activeSpecies.minLegalSizeCm ? `${activeSpecies.minLegalSizeCm} cm (Total Length)` : 'No Minimum Size'}
-                  </span>
+              {!activeSpecies.legalRulesVerified ? (
+                <div className="p-3 rounded-lg bg-amber-950/50 border border-amber-800/60 text-xs text-amber-200">
+                  <strong>VERIFY WITH DFFE</strong>
+                  <p className="mt-1">The legal size, bag limit and closed-season data for this species has not yet passed the app's independent current-rule audit. The stored values are deliberately not presented as legal advice.</p>
                 </div>
-                <div>
-                  <span className="text-slate-400 block font-medium">Daily Bag Limit:</span>
-                  <span className="text-sm font-bold text-cyan-300 font-mono">
-                    {activeSpecies.maxBagLimit ? `${activeSpecies.maxBagLimit} per day` : 'Unlimited'}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block font-medium">Edibility / Table:</span>
-                  <span className="text-sm font-bold text-emerald-300">
-                    {activeSpecies.edibility}
-                  </span>
-                </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                  <div>
+                    <span className="text-slate-400 block font-medium">Minimum Size:</span>
+                    <span className="text-sm font-bold text-amber-300 font-mono">
+                      {activeSpecies.minLegalSizeCm ? `${activeSpecies.minLegalSizeCm} cm (Total Length)` : 'No Minimum Size'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block font-medium">Daily Bag Limit:</span>
+                    <span className="text-sm font-bold text-cyan-300 font-mono">
+                      {activeSpecies.maxBagLimit ? `${activeSpecies.maxBagLimit} per day` : 'Unlimited'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block font-medium">Edibility / Table:</span>
+                    <span className="text-sm font-bold text-emerald-300">
+                      {activeSpecies.edibility}
+                    </span>
+                  </div>
+                  {activeSpecies.closedSeason && (
 
-              {activeSpecies.closedSeason && (
                 <div className="mt-3 p-2.5 rounded-lg bg-rose-950/60 border border-rose-800 text-xs text-rose-200">
                   <strong>⚠️ Strict Closed Season:</strong> {activeSpecies.closedSeason}
                 </div>
