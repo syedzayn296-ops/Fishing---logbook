@@ -74,7 +74,7 @@ export const SpeciesGuide: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-white font-['Outfit',sans-serif]">
-              South African Angling Species Identification & Legal Guide
+              South African Angling Species Identification & Reference Guide
             </h2>
             <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
               Species identification and practical guidance. Legal size, bag-limit and closed-season data are shown only after independent verification against current DFFE rules.
@@ -384,14 +384,16 @@ export const SpeciesGuide: React.FC = () => {
                     </span>
                   </div>
                   {activeSpecies.closedSeason && (
-
-                <div className="mt-3 p-2.5 rounded-lg bg-rose-950/60 border border-rose-800 text-xs text-rose-200">
-                  <strong>⚠️ Strict Closed Season:</strong> {activeSpecies.closedSeason}
+                    <div className="mt-3 p-2.5 rounded-lg bg-rose-950/60 border border-rose-800 text-xs text-rose-200">
+                      <strong>Closed Season:</strong> {activeSpecies.closedSeason}
+                    </div>
+                  )}
                 </div>
               )}
 
               <div className="mt-2.5 text-[11px] text-slate-300">
-                <strong>SASSI Note:</strong> {activeSpecies.sassiReason}
+                <strong>SASSI reference:</strong> {activeSpecies.sassiReason}
+                <span className="block mt-1 text-slate-500">Check the current SASSI guidance before making a seafood choice; this app's stored status is a reference, not a live SASSI feed.</span>
               </div>
             </div>
 
