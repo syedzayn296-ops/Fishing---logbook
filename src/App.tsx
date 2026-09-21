@@ -108,10 +108,10 @@ export default function App() {
             <WeatherWidget weather={weather} locationName={selectedLocation.name} />
             <FishingPlanner location={selectedLocation} selectedDate={selectedDate} extrema={tideData.extrema} solunarPeriods={solunarPeriods} moonInfo={moonInfo} weather={weather} catches={catches} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div onClick={() => setActiveTab('regulations')} className="bg-slate-900/60 border border-cyan-500/20 hover:border-cyan-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
-                <div><span className="text-xs uppercase font-bold text-cyan-400 block tracking-wider">Permit & Licence</span><h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition">Get / Renew DFFE Permit</h4><p className="text-xs text-slate-400 mt-0.5">Open the official permit portal and check current conditions</p></div>
-                <span className="text-xs text-cyan-400 font-semibold group-hover:translate-x-1 transition">Open →</span>
-              </div>
+              <a href="https://www.fishing.dffe.gov.za/" target="_blank" rel="noreferrer" className="bg-slate-900/60 border border-cyan-500/20 hover:border-cyan-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
+                <div><span className="text-xs uppercase font-bold text-cyan-400 block tracking-wider">Permit & Licence</span><h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition">Get / Renew DFFE Permit</h4><p className="text-xs text-slate-400 mt-0.5">Open the official DFFE permit portal and check current conditions</p></div>
+                <span className="text-xs text-cyan-400 font-semibold group-hover:translate-x-1 transition">Open Official Portal ↗</span>
+              </a>
               <div onClick={() => setActiveTab('species')} className="bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
                 <div><span className="text-xs uppercase font-bold text-blue-400 block tracking-wider">Species Catalog</span><h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition">Explore {selectedLocation.name} Target Fish</h4><p className="text-xs text-slate-400 mt-0.5">{selectedLocation.keySpecies.join(' • ')}</p></div>
                 <span className="text-xs text-blue-400 font-semibold group-hover:translate-x-1 transition">View Guide →</span>
