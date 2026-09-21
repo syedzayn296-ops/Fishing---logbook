@@ -199,7 +199,7 @@ export default function App() {
       timestamp: new Date().toISOString(),
       notes: partialEntry.notes,
       photoUrl: partialEntry.photoUrl,
-      isLegal: partialEntry.isLegal ?? true,
+      isLegal: partialEntry.isLegal,
     };
     handleAddCatch(newEntry);
   };
