@@ -107,24 +107,24 @@ export async function fetchMarineWeather(lat: number, lon: number): Promise<Mari
 
     // Calculate a transparent marine-condition score (1 - 10). This is not a fish-catch prediction.
     let score = 7;
-    let label: 'Poor' | 'Fair' | 'Good' | 'Excellent' | 'Prime Time' = 'Good';
+    let label: 'Very Rough' | 'Calm' | 'Moderate' | 'Favourable' | 'Strong Conditions' = 'Good';
     let summary = 'Marine conditions are moderate based on the available wind and wave inputs.';
 
     if (waveHeight > 3.2 || windSpeedKnots > 24) {
       score = 3;
-      label = 'Poor';
+      label = 'Very Rough';
       summary = 'Strong wind and/or high wave conditions. Use caution and assess local conditions before fishing.';
     } else if (waveHeight < 0.8 && windSpeedKnots < 5) {
       score = 5;
-      label = 'Fair';
+      label = 'Calm';
       summary = 'Light wind and low wave conditions. Local water clarity and fish activity are not predicted by this score.';
     } else if (swellPeriod >= 11 && swellHeight >= 1.2 && swellHeight <= 2.2 && windSpeedKnots <= 14) {
       score = 9;
-      label = 'Prime Time';
+      label = 'Favourable';
       summary = 'The wind, swell height and swell period fall within a favourable marine-condition range; local fishing activity can still vary.';
     } else if (swellHeight <= 2.5 && windSpeedKnots <= 18) {
       score = 7;
-      label = 'Good';
+      label = 'Moderate';
       summary = 'Wind and swell are within a moderate range for coastal angling; local conditions can still vary.';
     }
 
