@@ -27,15 +27,15 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, locationN
 
   const getBiteBadgeClass = (label: string) => {
     switch (label) {
-      case 'Prime Time':
+      case 'Favourable':
         return 'bg-emerald-950/90 text-emerald-300 border-emerald-500/60 shadow-emerald-500/20';
-      case 'Excellent':
+      case 'Strong Conditions':
         return 'bg-cyan-950/90 text-cyan-300 border-cyan-500/60 shadow-cyan-500/20';
-      case 'Good':
+      case 'Moderate':
         return 'bg-blue-950/90 text-blue-300 border-blue-500/60';
-      case 'Fair':
+      case 'Calm':
         return 'bg-amber-950/90 text-amber-300 border-amber-500/60';
-      case 'Poor':
+      case 'Very Rough':
       default:
         return 'bg-rose-950/90 text-rose-300 border-rose-500/60';
     }
