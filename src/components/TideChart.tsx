@@ -43,7 +43,7 @@ export const TideChart: React.FC<TideChartProps> = ({
   const chartWidth = svgWidth - paddingLeft - paddingRight;
   const chartHeight = svgHeight - paddingTop - paddingBottom;
 
-  // South African Chart Datum range: typically 0.0m to 2.4m
+  // Display range for the current model. These heights are NOT calibrated to SANHO chart datum.
   const minHeight = 0.0;
   const maxHeight = 2.4;
 
@@ -99,6 +99,9 @@ export const TideChart: React.FC<TideChartProps> = ({
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
             Modeled estimate • reference station: <span className="text-slate-200 font-medium">{location.tideStationName}</span> ({location.regionName})
+          </p>
+          <p className="text-[11px] text-amber-300/80 mt-1">
+            Height values are model-relative estimates, not SANHO chart-datum readings. Use official tide tables for navigation or safety-critical decisions.
           </p>
         </div>
 
