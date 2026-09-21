@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { CoastalLocation, MarineWeatherData, CatchLogEntry } from './types';
+import { CoastalLocation, MarineWeatherData, CatchLogEntry, TideExtremum, TidePoint, TideSourceInfo } from './types';
 import { SA_FISHING_LOCATIONS } from './data/saLocations';
 import { calculateTidesForDay, getMoonPhaseInfo, getSolunarPeriods } from './utils/tideEngine';
 import { fetchMarineWeather, getCachedMarineWeather } from './utils/weatherApi';
@@ -31,6 +31,7 @@ export default function App() {
   const [weather, setWeather] = useState<MarineWeatherData | null>(() => getCachedMarineWeather(SA_FISHING_LOCATIONS[1].lat, SA_FISHING_LOCATIONS[1].lon));
   const [weatherLoading, setWeatherLoading] = useState(false);
   const [nowTick, setNowTick] = useState(() => Date.now());
+  const [liveTide, setLiveTide] = useState<{ curvePoints: TidePoint[]; extrema: TideExtremum[]; source: TideSourceInfo } | null>(null);
 
   const [catches, setCatches] = useState<CatchLogEntry[]>(() => {
     try {
@@ -133,7 +134,7 @@ export default function App() {
 
         {activeTab === 'tides' && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <TideChart location={selectedLocation} selectedDate={selectedDate} curvePoints={tideData.curvePoints} extrema={tideData.extrema} currentHeight={tideData.currentHeight} currentTrend={tideData.currentTrend} nextExtremum={tideData.nextExtremum} moonInfo={moonInfo} solunarPeriods={solunarPeriods} sunrise={weather?.sunrise} sunset={weather?.sunset} />
+            <TideChart location={selectedLocation} selectedDate={selectedDate} curvePoints={tideData.curvePoints} extrema={tideData.extrema} currentHeight={tideData.currentHeight} currentTrend={tideData.currentTrend} nextExtremum={tideData.nextExtremum} moonInfo={moonInfo} tideSource={tideSource} solunarPeriods={solunarPeriods} sunrise={weather?.sunrise} sunset={weather?.sunset} />
             <WeatherWidget weather={weather} locationName={selectedLocation.name} />
             <FishingPlanner location={selectedLocation} selectedDate={selectedDate} extrema={tideData.extrema} solunarPeriods={solunarPeriods} moonInfo={moonInfo} weather={weather} catches={catches} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
