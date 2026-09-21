@@ -402,7 +402,7 @@ export const AiSpeciesIdentifier: React.FC<AiSpeciesIdentifierProps> = ({ onLogC
               <div>
                 <h4 className="text-sm font-semibold text-slate-400">Waiting for catch data</h4>
                 <p className="text-xs text-slate-500 max-w-xs mt-1">
-                  Upload a photo or enter characteristics to identify the fish and verify legal sizes in South Africa.
+                  Upload a photo or enter characteristics to identify the fish and view regulatory status in South Africa.
                 </p>
               </div>
             </div>
