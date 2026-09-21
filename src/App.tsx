@@ -118,22 +118,34 @@ export default function App() {
 
   const tideData = useMemo(() => {
     if (!liveTide) return modelTideData;
-    const now = new Date();
     const points = liveTide.curvePoints;
+    const now = new Date();
+    const selectedDayStart = new Date(selectedDate);
+    selectedDayStart.setHours(0, 0, 0, 0);
+    const sameCalendarDay = now.toDateString() === selectedDayStart.toDateString();
+    const statusTime = sameCalendarDay ? now : selectedDayStart;
     let currentHeight = modelTideData.currentHeight;
     let currentTrend = modelTideData.currentTrend;
     for (let i = 0; i < points.length - 1; i++) {
-      if (points[i].time <= now && points[i + 1].time >= now) {
+      if (points[i].time <= statusTime && points[i + 1].time >= statusTime) {
         const span = points[i + 1].time.getTime() - points[i].time.getTime();
-        const ratio = span > 0 ? (now.getTime() - points[i].time.getTime()) / span : 0;
+        const ratio = span > 0 ? (statusTime.getTime() - points[i].time.getTime()) / span : 0;
         currentHeight = Number((points[i].height + (points[i + 1].height - points[i].height) * ratio).toFixed(2));
         currentTrend = points[i + 1].height >= points[i].height ? 'Rising' : 'Falling';
         break;
       }
     }
-    return { ...modelTideData, curvePoints: points, extrema: liveTide.extrema, currentHeight, currentTrend, nextExtremum: liveTide.extrema.find((e) => e.time.getTime() > Date.now()) ?? null };
-  }, [liveTide, modelTideData, nowTick]);
-  const tideSource: TideSourceInfo = liveTide?.source ?? { source: 'model', provider: 'Local astronomical model' };\n  const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
+    return {
+      ...modelTideData,
+      curvePoints: points,
+      extrema: liveTide.extrema,
+      currentHeight,
+      currentTrend,
+      nextExtremum: liveTide.extrema.find((e) => e.time.getTime() > statusTime.getTime()) ?? null,
+    };
+  }, [liveTide, modelTideData, selectedDate, nowTick]);
+  const tideSource: TideSourceInfo = liveTide?.source ?? { source: 'model', provider: 'Local fallback model' };
+  const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
   const solunarPeriods = useMemo(() => getSolunarPeriods(selectedDate), [selectedDate]);
 
   const loadWeatherForLocation = useCallback((lat: number, lon: number) => {
