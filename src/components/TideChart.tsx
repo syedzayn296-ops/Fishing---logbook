@@ -103,7 +103,7 @@ export const TideChart: React.FC<TideChartProps> = ({
           </div>
           <p className="text-xs text-slate-400 mt-1">
             Source: <span className="text-slate-200 font-medium">{tideSource.provider}</span>
-            {tideSource.station ? <> · Station: <span className="text-slate-200 font-medium">{tideSource.station}</span></> : <> · Model reference: <span className="text-slate-200 font-medium">{location.tideStationName}</span></>}
+            {tideSource.station ? <> · Station: <span className="text-slate-200 font-medium">{tideSource.station}</span></> : <> · Model reference: <span className="text-slate-200 font-medium">{location.tideStationName}</span> · <span className="text-amber-300/90">{location.tideReferenceSource ?? 'Reference source not recorded'}</span></>}
             {typeof tideSource.distanceKm === 'number' && <> · {tideSource.distanceKm.toFixed(1)} km</>}
             {tideSource.datum && <> · Datum: <span className="text-slate-200 font-medium">{tideSource.datum}</span></>}
           </p>
@@ -112,8 +112,8 @@ export const TideChart: React.FC<TideChartProps> = ({
               ⚠ NOT FOR NAVIGATION
             </span>
             <span className="text-[11px] text-slate-500">
-              Recreational fishing planning only · official tide tables remain the reference.
-              {isModelFallback ? ' Local fallback calibration is unverified.' : ''}
+              Recreational fishing planning only · official tide tables remain the reference.{location.tideReferencePort ? ' SANHO HO-2 is used only as the reference/validation source.' : ' No direct SANHO HO-2 port reference is established for this location.'}
+              {isModelFallback ? ' Local fallback calibration is unverified.' : ' Provider prediction is not an official SANHO tide table.'}
             </span>
           </div>
         </div>
