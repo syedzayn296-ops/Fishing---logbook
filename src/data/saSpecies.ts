@@ -3,6 +3,7 @@ import { FishSpecies } from '../types';
 export const SA_SPECIES_DATABASE: FishSpecies[] = [
   {
     id: 'galjoen',
+    legalRulesVerified: false,
     commonName: 'Galjoen (South African National Fish)',
     scientificName: 'Dichistius capensis',
     localNames: ['Galjoen', 'Damba', 'Black Bream', 'Highwater Fish'],
@@ -27,6 +28,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'kob-kabeljou',
+    legalRulesVerified: false,
     commonName: 'Kob / Dusky Kob (Kabeljou)',
     scientificName: 'Argyrosomus japonicus',
     localNames: ['Kabeljou', 'Daga Kob', 'Boerkabeljou', 'Dusky Kob'],
@@ -53,6 +55,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'yellowtail',
+    legalRulesVerified: false,
     commonName: 'Cape Yellowtail',
     scientificName: 'Seriola lalandi',
     localNames: ['Geelstert', 'Yellowtail', 'Cape Kingfish'],
@@ -78,6 +81,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'garrick-leervis',
+    legalRulesVerified: false,
     commonName: 'Garrick (Leervis)',
     scientificName: 'Lichia amia',
     localNames: ['Leervis', 'Garrick', 'Leerier', 'Amia'],
@@ -102,6 +106,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'snoek',
+    legalRulesVerified: false,
     commonName: 'Cape Snoek',
     scientificName: 'Thyrsites atun',
     localNames: ['Snoek', 'Zee-snoek', 'Barracouta'],
@@ -127,6 +132,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'spotted-grunter',
+    legalRulesVerified: false,
     commonName: 'Spotted Grunter',
     scientificName: 'Pomadasys commersonnii',
     localNames: ['Knorhaan', 'Grunter', 'Tiger Fish of the Estuary'],
@@ -151,6 +157,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'shad-elf',
+    legalRulesVerified: false,
     commonName: 'Shad / Elf (Bluefish)',
     scientificName: 'Pomatomus saltatrix',
     localNames: ['Shad (KZN)', 'Elf (Cape)', 'Bluefish', 'Tailor'],
@@ -175,6 +182,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'white-steenbras',
+    legalRulesVerified: false,
     commonName: 'White Steenbras (West Coast Steenbras)',
     scientificName: 'Lithognathus lithognathus',
     localNames: ['Witsteenbras', 'Pignose Grunter', 'River Steenbras'],
@@ -199,6 +207,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'red-roman',
+    legalRulesVerified: false,
     commonName: 'Red Roman',
     scientificName: 'Chrysoblephus laticeps',
     localNames: ['Roman', 'Rooi Roman', 'Red Emperor'],
@@ -223,6 +232,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'bronze-bream',
+    legalRulesVerified: false,
     commonName: 'Bronze Bream',
     scientificName: 'Pachymetopon grande',
     localNames: ['Bruin Bream', 'Bronze Bream', 'Hottentot (KZN)'],
@@ -247,6 +257,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'poenskop-black-musselcracker',
+    legalRulesVerified: false,
     commonName: 'Poenskop (Black Musselcracker)',
     scientificName: 'Cymatoceps nasutus',
     localNames: ['Poenskop', 'Black Steenie', 'Biskop', 'Black Cracker'],
@@ -271,6 +282,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'white-musselcracker-brusher',
+    legalRulesVerified: false,
     commonName: 'White Musselcracker (Brusher)',
     scientificName: 'Sparodon durbanensis',
     localNames: ['Wit Steenbras (KZN)', 'Brusher', 'White Cracker', 'Silver Steenie'],
@@ -295,6 +307,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'geelbek-cape-salmon',
+    legalRulesVerified: false,
     commonName: 'Geelbek (Cape Salmon)',
     scientificName: 'Atractoscion aequidens',
     localNames: ['Geelbek', 'Cape Salmon', 'Yellowmouth'],
@@ -319,6 +332,7 @@ export const SA_SPECIES_DATABASE: FishSpecies[] = [
   },
   {
     id: 'cape-stumpnose',
+    legalRulesVerified: false,
     commonName: 'Cape Stumpnose',
     scientificName: 'Rhabdosargus holubi',
     localNames: ['Kaapse Stompkop', 'Stumpnose', 'Flatty'],
