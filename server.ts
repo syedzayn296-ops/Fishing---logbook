@@ -199,7 +199,47 @@ When identifying a fish:
   }
 });
 
-// Open Waters harmonic tide prediction proxy.\n// The client only uses this as a live prediction source when the response passes validation;\n// the existing local model remains the fallback. Open Waters predictions are not for navigation.\napp.get("/api/tides", async (req, res) => {\n  try {\n    const lat = Number(req.query.lat);\n    const lon = Number(req.query.lon);\n    const start = String(req.query.start || new Date().toISOString());\n    const end = String(req.query.end || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString());\n\n    if (!Number.isFinite(lat) || !Number.isFinite(lon)) {\n      return res.status(400).json({ error: "Valid latitude and longitude are required." });\n    }\n\n    const url = new URL("https://api.openwaters.io/tides/extremes");\n    url.searchParams.set("latitude", String(lat));\n    url.searchParams.set("longitude", String(lon));\n    url.searchParams.set("start", start);\n    url.searchParams.set("end", end);\n    url.searchParams.set("units", "meters");\n\n    const response = await fetch(url);\n    const data = await response.json();\n\n    if (!response.ok) {\n      return res.status(response.status).json({ error: "Live tide provider unavailable.", provider: "openwaters" });\n    }\n\n    const timelineUrl = new URL("https://api.openwaters.io/tides/timeline");\n    timelineUrl.search = url.search;\n    const timelineResponse = await fetch(timelineUrl);\n    const timeline = timelineResponse.ok ? await timelineResponse.json() : null;\n\n    return res.json({ provider: "openwaters", fetchedAt: new Date().toISOString(), station: data?.station ?? timeline?.station ?? null, distance: data?.distance ?? timeline?.distance ?? null, datum: data?.datum ?? timeline?.datum ?? null, units: data?.units ?? timeline?.units ?? "meters", data, timeline });\n  } catch (error) {\n    console.error("Live tide provider error:", error);\n    return res.status(502).json({ error: "Live tide provider unavailable.", provider: "openwaters" });\n  }\n});\n\n// Open-Meteo Marine & Weather Proxy / Cache
+// Open Waters harmonic tide prediction proxy.
+// The client only uses this as a live prediction source when the response passes validation;
+// the existing local model remains the fallback. Open Waters predictions are not for navigation.
+app.get("/api/tides", async (req, res) => {
+  try {
+    const lat = Number(req.query.lat);
+    const lon = Number(req.query.lon);
+    const start = String(req.query.start || new Date().toISOString());
+    const end = String(req.query.end || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString());
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+      return res.status(400).json({ error: "Valid latitude and longitude are required." });
+    }
+
+    const url = new URL("https://api.openwaters.io/tides/extremes");
+    url.searchParams.set("latitude", String(lat));
+    url.searchParams.set("longitude", String(lon));
+    url.searchParams.set("start", start);
+    url.searchParams.set("end", end);
+    url.searchParams.set("units", "meters");
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: "Live tide provider unavailable.", provider: "openwaters" });
+    }
+
+    const timelineUrl = new URL("https://api.openwaters.io/tides/timeline");
+    timelineUrl.search = url.search;
+    const timelineResponse = await fetch(timelineUrl);
+    const timeline = timelineResponse.ok ? await timelineResponse.json() : null;
+
+    return res.json({ provider: "openwaters", fetchedAt: new Date().toISOString(), station: data?.station ?? timeline?.station ?? null, distance: data?.distance ?? timeline?.distance ?? null, datum: data?.datum ?? timeline?.datum ?? null, units: data?.units ?? timeline?.units ?? "meters", data, timeline });
+  } catch (error) {
+    console.error("Live tide provider error:", error);
+    return res.status(502).json({ error: "Live tide provider unavailable.", provider: "openwaters" });
+  }
+});
+
+// Open-Meteo Marine & Weather Proxy / Cache
 app.get("/api/marine-weather", async (req, res) => {
   try {
     const lat = req.query.lat || "-33.9249";
