@@ -70,11 +70,35 @@ export default function App() {
       .then((r) => { if (!r.ok) throw new Error('tide provider unavailable'); return r.json(); })
       .then((payload) => {
         const tl = payload?.timeline?.timeline ?? payload?.timeline?.data ?? payload?.timeline;
-        const ex = payload?.data?.extremes ?? payload?.data?.data ?? payload?.data;
-        const point = (x: any): TidePoint | null => { const t = new Date(x?.time ?? x?.timestamp ?? x?.datetime); const h = Number(x?.height ?? x?.value ?? x?.waterLevel); return !Number.isNaN(t.getTime()) && Number.isFinite(h) ? { time: t, height: Number(h.toFixed(2)) } : null; };
+        const ex = payload?.data?.extremes ?? payload?.data?.data ?? payload?.data?.extremes ?? payload?.data;
+        const point = (x: any): TidePoint | null => {
+          const t = new Date(x?.time ?? x?.timestamp ?? x?.datetime);
+          const h = Number(x?.level ?? x?.height ?? x?.value ?? x?.waterLevel);
+          return !Number.isNaN(t.getTime()) && Number.isFinite(h) ? { time: t, height: Number(h.toFixed(2)) } : null;
+        };
         const curvePoints = (Array.isArray(tl) ? tl : []).map(point).filter(Boolean) as TidePoint[];
-        const extrema = (Array.isArray(ex) ? ex : []).map((x: any) => { const p = point(x); return p ? { ...p, type: String(x?.type ?? x?.event ?? '').toLowerCase().includes('high') ? 'high' : 'low' } as TideExtremum : null; }).filter(Boolean) as TideExtremum[];
-        if (!cancelled && curvePoints.length >= 2 && extrema.length >= 2) setLiveTide({ curvePoints, extrema, source: { source: 'live', provider: 'Open Waters / Neaps', fetchedAt: payload?.fetchedAt } });
+        const extrema = (Array.isArray(ex) ? ex : []).map((x: any) => {
+          const p = point(x);
+          const label = String(x?.label ?? x?.type ?? x?.event ?? '').toLowerCase();
+          const type = x?.high === true || label.includes('high') ? 'high' : x?.low === true || label.includes('low') ? 'low' : null;
+          return p && type ? { ...p, type } as TideExtremum : null;
+        }).filter(Boolean) as TideExtremum[];
+        const distanceKm = Number(payload?.distance);
+        if (!cancelled && curvePoints.length >= 2 && extrema.length >= 2) {
+          setLiveTide({
+            curvePoints,
+            extrema,
+            source: {
+              source: 'live',
+              provider: 'Open Waters / Neaps',
+              fetchedAt: payload?.fetchedAt,
+              station: payload?.station?.name ?? payload?.station?.source?.name,
+              distanceKm: Number.isFinite(distanceKm) ? distanceKm : undefined,
+              datum: payload?.datum,
+              units: payload?.units ?? 'meters',
+            },
+          });
+        }
       }).catch(() => { if (!cancelled) setLiveTide(null); });
     return () => { cancelled = true; };
   }, [selectedLocation.lat, selectedLocation.lon, selectedDate]);
@@ -96,7 +120,7 @@ export default function App() {
     }
     return { ...modelTideData, curvePoints: points, extrema: liveTide.extrema, currentHeight, currentTrend, nextExtremum: liveTide.extrema.find((e) => e.time.getTime() > Date.now()) ?? null };
   }, [liveTide, modelTideData, nowTick]);
-  const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
+  const tideSource: TideSourceInfo = liveTide?.source ?? { source: 'model', provider: 'Local astronomical model' };\n  const moonInfo = useMemo(() => getMoonPhaseInfo(selectedDate), [selectedDate]);
   const solunarPeriods = useMemo(() => getSolunarPeriods(selectedDate), [selectedDate]);
 
   const loadWeatherForLocation = useCallback((lat: number, lon: number) => {
