@@ -246,7 +246,7 @@ export const TideChart: React.FC<TideChartProps> = ({
                     fontSize="10"
                     fontFamily="monospace"
                   >
-                    {h.toFixed(1)}m
+                    {isModelFallback ? `${h.toFixed(1)} rel.` : `${h.toFixed(1)}m`}
                   </text>
                 </g>
               );
