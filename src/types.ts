@@ -66,7 +66,7 @@ export interface MarineWeatherData {
   uvIndex?: number;
   biteRating: {
     score: number; // 1 to 10
-    label: 'Poor' | 'Fair' | 'Good' | 'Excellent' | 'Prime Time';
+    label: 'Very Rough' | 'Calm' | 'Moderate' | 'Favourable' | 'Strong Conditions';
     summary: string;
   };
   cachedAt?: string; // ISO string when data was fetched or cached
