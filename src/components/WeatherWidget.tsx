@@ -97,7 +97,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, locationN
             <CheckCircle2 className="w-5 h-5 shrink-0" />
             <div>
               <span className="text-xs uppercase tracking-wider font-bold block opacity-80">
-                Angler's Surf & Strike Rating
+                Marine Condition Rating
               </span>
               <span className="text-lg font-black font-['Outfit',sans-serif]">
                 {weather.biteRating.label} ({weather.biteRating.score}/10)
