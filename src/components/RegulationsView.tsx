@@ -1,8 +1,10 @@
 import React from 'react';
 import { SA_BAIT_LIMITS, SA_GENERAL_REGULATIONS, SA_REGULATORY_SOURCES } from '../data/saRegulations';
-import { ShieldCheck, AlertTriangle, CheckCircle2, Ruler, BookOpen, Compass, ExternalLink } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, Ruler, Compass, ExternalLink } from 'lucide-react';
 
 export const RegulationsView: React.FC = () => {
+  const dffePermitUrl = 'https://www.fishing.dffe.gov.za/';
+
   return (
     <div className="space-y-6">
       
@@ -39,7 +41,7 @@ export const RegulationsView: React.FC = () => {
               Use the official DFFE links to apply, renew, and check the current rules before fishing.
             </p>
             <p className="text-[10px] text-slate-500 mt-1">
-              Legal-source review: 19 September 2026 • MLRA Regulations / Annexure 7 checked against current DFFE material.
+              Legal-source review: 21 September 2026 • MLRA Regulations / Annexure 7 and Annexure 13 checked against DFFE material.
             </p>
           </div>
           <span className="text-[11px] text-emerald-400 font-semibold">
@@ -47,10 +49,10 @@ export const RegulationsView: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {SA_REGULATORY_SOURCES.map((source) => (
             <a
-              key={source.url}
+              key={source.title}
               href={source.url}
               target="_blank"
               rel="noreferrer"
@@ -67,11 +69,29 @@ export const RegulationsView: React.FC = () => {
                 </div>
                 <ExternalLink className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
               </div>
-              <div className="mt-3 text-[10px] text-slate-500 font-mono break-all">
-                {source.url.replace(/^https?:\/\//, '')}
-              </div>
             </a>
           ))}
+        </div>
+      </div>
+
+      {/* Verification rule */}
+      <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-5 shadow-xl">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-base font-bold text-white font-['Outfit',sans-serif]">When a legal number cannot be verified</h3>
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+              We deliberately do not publish an unverified hard number. Use the official DFFE source to confirm the current rule for your permit and fishing activity.
+            </p>
+            <a
+              href={dffePermitUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 mt-3 px-3 py-2 rounded-lg bg-cyan-900/50 border border-cyan-500/40 text-cyan-200 text-xs font-semibold hover:bg-cyan-900/80"
+            >
+              Verify with DFFE <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -83,7 +103,7 @@ export const RegulationsView: React.FC = () => {
               Recreational Inshore Bait Limits
             </h3>
             <p className="text-xs text-slate-400">
-              Limits below are from MLRA Annexure 13. Check the current DFFE permit conditions and local rules before collecting bait.
+              Verified figures below are from MLRA Annexure 13. Other size, method, area and permit conditions may also apply.
             </p>
           </div>
           <span className="text-xs text-amber-400 font-medium">
@@ -91,13 +111,10 @@ export const RegulationsView: React.FC = () => {
           </span>
         </div>
 
-        <p className="text-[11px] text-slate-500 leading-relaxed -mt-1">
-          These are Annexure 13 possession limits; additional size, method, area and permit conditions may apply.
-        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {SA_BAIT_LIMITS.map((bait, idx) => (
+          {SA_BAIT_LIMITS.map((bait) => (
             <div
-              key={idx}
+              key={bait.name}
               className="bg-slate-800/50 border border-slate-700/60 rounded-xl p-4 flex flex-col justify-between"
             >
               <div>
@@ -110,9 +127,15 @@ export const RegulationsView: React.FC = () => {
                       {bait.scientificName}
                     </span>
                   </div>
-                  <span className="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-600/50 text-amber-300 text-xs font-bold font-mono shrink-0">
-                    {bait.limit}
-                  </span>
+                  {bait.verified ? (
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-950/70 border border-emerald-600/50 text-emerald-300 text-xs font-bold shrink-0">
+                      VERIFIED • {bait.limit}
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-600/50 text-amber-300 text-xs font-bold shrink-0">
+                      VERIFY WITH DFFE
+                    </span>
+                  )}
                 </div>
 
                 {bait.minimumSize && (
@@ -127,7 +150,11 @@ export const RegulationsView: React.FC = () => {
               </div>
 
               <div className="mt-3 pt-2 border-t border-slate-700/50 text-[11px] text-slate-400">
-                <strong className="text-slate-300">Target Species:</strong> {bait.notes}
+                <strong className="text-slate-300">Verification:</strong> {bait.verificationNote}
+              </div>
+
+              <div className="mt-2 pt-2 border-t border-slate-700/50 text-[11px] text-slate-400">
+                <strong className="text-slate-300">Notes:</strong> {bait.notes}
               </div>
             </div>
           ))}
@@ -151,7 +178,6 @@ export const RegulationsView: React.FC = () => {
       {/* General Angling Regulations & Permits */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         
-        {/* Permits */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
           <div className="flex items-center gap-2 text-cyan-400 font-bold text-sm font-['Outfit',sans-serif]">
             <ShieldCheck className="w-4 h-4" />
@@ -167,7 +193,6 @@ export const RegulationsView: React.FC = () => {
           </ul>
         </div>
 
-        {/* Measuring Rules */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
           <div className="flex items-center gap-2 text-amber-400 font-bold text-sm font-['Outfit',sans-serif]">
             <Ruler className="w-4 h-4" />
@@ -183,7 +208,6 @@ export const RegulationsView: React.FC = () => {
           </ul>
         </div>
 
-        {/* Marine Protected Areas (MPAs) */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
           <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm font-['Outfit',sans-serif]">
             <Compass className="w-4 h-4" />
