@@ -252,7 +252,7 @@ export default function App() {
 
       <footer className="border-t border-slate-800 bg-slate-950 text-slate-500 text-xs py-5 mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div><p className="font-medium text-slate-400">TideCast South Africa • Offline-Ready Marine Angling Tool</p><p className="text-[11px] text-slate-500 mt-0.5">Tide curve is a modeled estimate, not an official hydrographic tide table. Marine weather is live when available and cached locally for offline use.</p></div>
+          <div><p className="font-medium text-slate-400">TideCast South Africa • Offline-Ready Marine Angling Tool</p><p className="text-[11px] text-slate-500 mt-0.5">{tideSource.source === 'live' ? 'Tide prediction is fetched from the Open Waters / Neaps provider; it is not an official hydrographic tide table.' : 'Tide curve is a relative local model, not an official hydrographic tide table.'} Marine weather is live when available and cached locally for offline use.</p></div>
           <div className="flex items-center gap-4 text-slate-400"><button onClick={() => setActiveTab('regulations')} className="hover:text-cyan-400 transition cursor-pointer">Bait Limits</button><button onClick={() => setActiveTab('species')} className="hover:text-cyan-400 transition cursor-pointer">Species List</button><button onClick={() => setActiveTab('logbook')} className="hover:text-cyan-400 transition cursor-pointer">Catch Diary</button></div>
         </div>
       </footer>
